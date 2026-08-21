@@ -2,7 +2,7 @@
 
 // Movement
 mob
-	step_size = 2
+	step_size = 2.5
 
 	New()
 		..()
