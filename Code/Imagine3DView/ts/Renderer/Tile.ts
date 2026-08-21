@@ -18,7 +18,8 @@ export class Tile {
 
     private createStructure(tile: TileJson): void {
         if (tile.floorResourceId !== null) {
-            const mesh = new THREE.Mesh(tileSideGeometry, map.materials[tile.floorResourceId]);
+            const material = map.materials[tile.floorResourceId];
+            const mesh = new THREE.Mesh(tileSideGeometry, material);
 
             mesh.position.set(0, -0.5, 0);
             mesh.rotation.x = -Math.PI / 2;
@@ -27,7 +28,8 @@ export class Tile {
         }
 
         if (tile.ceilingResourceId !== null) {
-            const mesh = new THREE.Mesh(tileSideGeometry, map.materials[tile.ceilingResourceId]);
+            const material = map.materials[tile.ceilingResourceId];
+            const mesh = new THREE.Mesh(tileSideGeometry, material);
 
             mesh.position.set(0, 0.5, 0);
             mesh.rotation.x = Math.PI / 2;

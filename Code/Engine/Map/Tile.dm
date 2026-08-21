@@ -35,9 +35,9 @@ Tile
         else
             selectedWallIcon = someTile.icon
 
-        j_floorResourceId = global_map.j_resourceMap.addNewResource(selectedFloorIcon, someTile.i3d_floor_icon_state)
-        j_ceilingResourceId = global_map.j_resourceMap.addNewResource(selectedWallIcon, someTile.i3d_ceiling_icon_state)
-        j_wallResourceId = global_map.j_resourceMap.addNewResource(selectedCeilingIcon, someTile.i3d_wall_icon_state)
+        j_floorResourceId = global_map.j_resourceMap.addNewResource(selectedFloorIcon, someTile.i3d_floor_icon_state, "floor")
+        j_ceilingResourceId = global_map.j_resourceMap.addNewResource(selectedWallIcon, someTile.i3d_ceiling_icon_state, "ceiling")
+        j_wallResourceId = global_map.j_resourceMap.addNewResource(selectedCeilingIcon, someTile.i3d_wall_icon_state, "wall")
 
     proc
         getId()

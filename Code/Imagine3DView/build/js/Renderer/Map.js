@@ -40,7 +40,15 @@ export class Map {
         });
     }
     createMaterials() {
-        return this.textures.map((texture) => new THREE.MeshBasicMaterial({ map: texture }));
+        return this.textures.map((texture, index) => {
+            const resource = this.resources[index];
+            if (resource.usage === "floor" || resource.usage === "ceiling") {
+                return new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+            }
+            else {
+                return new THREE.MeshBasicMaterial({ map: texture });
+            }
+        });
     }
     loadTiles() {
         var _a, _b, _c;

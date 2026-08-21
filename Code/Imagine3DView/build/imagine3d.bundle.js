@@ -27108,13 +27108,15 @@ void main() {
         }
         createStructure(tile) {
           if (tile.floorResourceId !== null) {
-            const mesh = new Mesh(tileSideGeometry, map.materials[tile.floorResourceId]);
+            const material = map.materials[tile.floorResourceId];
+            const mesh = new Mesh(tileSideGeometry, material);
             mesh.position.set(0, -0.5, 0);
             mesh.rotation.x = -Math.PI / 2;
             this.objectGroup.add(mesh);
           }
           if (tile.ceilingResourceId !== null) {
-            const mesh = new Mesh(tileSideGeometry, map.materials[tile.ceilingResourceId]);
+            const material = map.materials[tile.ceilingResourceId];
+            const mesh = new Mesh(tileSideGeometry, material);
             mesh.position.set(0, 0.5, 0);
             mesh.rotation.x = Math.PI / 2;
             this.objectGroup.add(mesh);
@@ -27187,7 +27189,14 @@ void main() {
           });
         }
         createMaterials() {
-          return this.textures.map((texture) => new MeshBasicMaterial({ map: texture }));
+          return this.textures.map((texture, index) => {
+            const resource = this.resources[index];
+            if (resource.usage === "floor" || resource.usage === "ceiling") {
+              return new MeshBasicMaterial({ map: texture, side: DoubleSide });
+            } else {
+              return new MeshBasicMaterial({ map: texture });
+            }
+          });
         }
         loadTiles() {
           const tileArray = [];

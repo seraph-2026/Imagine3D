@@ -10,8 +10,8 @@ turf
 		BlueBrick
 			icon_state = "Blue Brick Wall"
 			i3d_wall_icon_state = "Blue Brick Wall"
-			i3d_floor_icon_state = "Concrete Floor"
-			i3d_ceiling_icon_state = "Concrete Ceiling"
+			i3d_floor_icon_state = "Concrete Ceiling"
+			i3d_ceiling_icon_state = "Concrete Floor"
 
 	Room
 		Concrete

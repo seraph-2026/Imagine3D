@@ -7,7 +7,7 @@ ResourceMap
             Promises to add a new resource if we don't already
             have it. In any case, returns j_id of resource.
         **/
-        addNewResource(icon, icon_state)
+        addNewResource(icon, icon_state, usage)
 
             // No icon data provided?
             if(isnull(icon) || isnull(icon_state))
@@ -19,6 +19,6 @@ ResourceMap
                     return resource.j_id
 
             // Make a new resource because we don't have this yet
-            var/Resource/newResource = new(icon, icon_state)
+            var/Resource/newResource = new(icon, icon_state, usage)
             j_resources += newResource
             return newResource.j_id
