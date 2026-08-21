@@ -2,11 +2,13 @@ import * as THREE from "three";
 import { CoordinateMapper } from "../Utilities/CoordinateMapper";
 import { AngleMapper } from "../Utilities/AngleMapper";
 import { view } from "../BrowserView/BrowserView";
+import { CameraSettings } from "./CameraSettings";
 export class Renderer {
     constructor() {
         console.log("Renderer");
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.cameraSettings = new CameraSettings();
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.domElement.style.transform = "scaleX(-1)";
@@ -37,6 +39,18 @@ export class Renderer {
             this.camera.position.y = 0;
             this.camera.position.z = 0;
         }
+    }
+    enableMouseLook() {
+        const canvas = this.renderer.domElement;
+        document.addEventListener("mousemove", (event) => {
+            if (document.pointerLockElement !== canvas) {
+                return;
+            }
+            this.yaw -= event.movementX * this.mouseSensitivity;
+            this.pitch -= event.movementY * this.mouseSensitivity;
+            const maxPitch = Math.PI / 2 - 0.01;
+            this.pitch = THREE.MathUtils.clamp(this.pitch, -maxPitch, maxPitch);
+        });
     }
     requestPointerLock() {
         const canvas = this.renderer.domElement;

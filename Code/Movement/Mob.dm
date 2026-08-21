@@ -18,7 +18,7 @@ mob
 	i3d_Move()
 		..()
 		if(src.client && imagine3DView)
-			i3d_updatePlayerPosition()
+			i3d_updatePlayerLocAndAngle()
 
 
 
