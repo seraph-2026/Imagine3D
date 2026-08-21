@@ -1,0 +1,26 @@
+[
+  {
+    "__DATUM__": 1,
+    "__TYPE__": "/Resource",
+    "icon": null,
+    "icon_state": "Concrete Floor",
+    "id": 0,
+    "png": "Icons.dmi.Concrete Floor.png"
+  },
+  {
+    "__DATUM__": 1,
+    "__TYPE__": "/Resource",
+    "icon": null,
+    "icon_state": "Concrete Ceiling",
+    "id": 1,
+    "png": "Icons.dmi.Concrete Ceiling.png"
+  },
+  {
+    "__DATUM__": 1,
+    "__TYPE__": "/Resource",
+    "icon": null,
+    "icon_state": "Blue Brick Wall",
+    "id": 2,
+    "png": "Icons.dmi.Blue Brick Wall.png"
+  }
+]

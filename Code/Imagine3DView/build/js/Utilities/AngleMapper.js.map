@@ -1,0 +1,1 @@
+{"version":3,"file":"AngleMapper.js","sourceRoot":"","sources":["../../../ts/Utilities/AngleMapper.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,KAAK,MAAM,OAAO,CAAC;AAE/B,MAAM,OAAO,WAAW;IACpB;;OAEG;IACH,MAAM,CAAC,iBAAiB,CAAC,UAAkB;QACvC,OAAO,KAAK,CAAC,SAAS,CAAC,QAAQ,CAAC,CAAC,UAAU,GAAG,GAAG,CAAC,GAAG,IAAI,CAAC,EAAE,GAAG,CAAC,CAAC,CAAC;IACtE,CAAC;CACJ"}

@@ -1,0 +1,84 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "DM Build",
+            "type": "shell",
+            "command": "C:\\Program Files (x86)\\BYOND\\bin\\dm.exe",
+            "args": ["C:\\BYOND Projects\\Imagine3D\\Imagine3D.dme"],
+            "problemMatcher": {
+                "owner": "dm",
+                "fileLocation": ["relative", "${workspaceFolder}"],
+                "pattern": {
+                    "regexp": "^([^:]+):(\\d+):([^:]+): (.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "severity": 3,
+                    "message": 4
+                }
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "DM Run",
+            "type": "shell",
+            "command": "C:\\Program Files (x86)\\BYOND\\bin\\dreamseeker.exe",
+            "args": ["C:\\BYOND Projects\\Imagine3D\\Imagine3D.dmb"],
+            "problemMatcher": {
+                "owner": "dm",
+                "fileLocation": ["relative", "${workspaceFolder}"],
+                "pattern": {
+                    "regexp": "^([^:]+):(\\d+):([^:]+): (.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "severity": 3,
+                    "message": 4
+                }
+            },
+
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Imagine3D - TypeScript",
+            "type": "shell",
+            "command": "npx",
+            "args": ["tsc", "--watch"],
+            "options": {
+                "cwd": "${workspaceFolder}/Code/Imagine3DView"
+            },
+            "isBackground": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "Imagine3D - Bundle",
+            "type": "shell",
+            "command": "npx",
+            "args": ["esbuild", "ts/Imagine3DView.ts", "--bundle", "--outfile=./build/imagine3d.bundle.js", "--watch"],
+            "options": {
+                "cwd": "${workspaceFolder}/Code/Imagine3DView"
+            },
+            "isBackground": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "Imagine3D - Watch",
+            "dependsOn": ["Imagine3D - TypeScript", "Imagine3D - Bundle"],
+            "dependsOrder": "parallel",
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        }
+    ]
+}

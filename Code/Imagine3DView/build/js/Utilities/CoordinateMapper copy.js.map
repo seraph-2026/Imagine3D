@@ -1,0 +1,1 @@
+{"version":3,"file":"CoordinateMapper copy.js","sourceRoot":"","sources":["../../../ts/Utilities/CoordinateMapper copy.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,KAAK,MAAM,OAAO,CAAC;AAE/B,MAAM,OAAO,WAAW;IACpB;;OAEG;IACH,MAAM,CAAC,iBAAiB,CAAC,EAAU,EAAE,EAAU,EAAE,EAAU;QACvD,OAAO,IAAI,KAAK,CAAC,OAAO,CAAC,EAAE,EAAE,EAAE,EAAE,EAAE,CAAC,CAAC;IACzC,CAAC;CACJ"}

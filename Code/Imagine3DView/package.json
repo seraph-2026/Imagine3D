@@ -1,0 +1,25 @@
+{
+    "name": "imagine3dview",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "tree": "npx tree-node-cli -a -I \"node_modules\""
+    },
+    "keywords": [],
+    "type": "commonjs",
+    "dependencies": {
+        "three": "^0.185.1"
+    },
+    "devDependencies": {
+        "@types/three": "^0.185.4",
+        "esbuild": "^0.28.2",
+        "prettier": "3.9.6",
+        "tree-node-cli": "^3.0.0",
+        "typescript": "^7.0.2"
+    },
+    "allowScripts": {
+        "esbuild@0.28.2": true
+    }
+}

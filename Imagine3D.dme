@@ -1,0 +1,54 @@
+// DM Environment file for Imagine3D.dme.
+// All manual changes should be made outside the BEGIN_ and END_ blocks.
+// New source code should be placed in .dm files: choose File/New --> Code File.
+
+// BEGIN_INTERNALS
+// END_INTERNALS
+
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+// END_FILE_DIR
+
+// BEGIN_PREFERENCES
+#define DEBUG
+// END_PREFERENCES
+
+// BEGIN_INCLUDE
+#include "Code\BrowserView\BrowserView.dm"
+#include "Code\BrowserView\ClientTopic.dm"
+#include "Code\BrowserView\Mob.dm"
+#include "Code\BrowserView\State.dm"
+#include "Code\BrowserView\ViewManager.dm"
+#include "Code\Engine\Client.dm"
+#include "Code\Engine\Imagine3D.dm"
+#include "Code\Engine\Mob.dm"
+#include "Code\Engine\World.dm"
+#include "Code\Engine\Map\Map.dm"
+#include "Code\Engine\Map\Resource.dm"
+#include "Code\Engine\Map\ResourceMap.dm"
+#include "Code\Engine\Map\Tile.dm"
+#include "Code\Engine\Map\TileMap.dm"
+#include "Code\Engine\Map\Turf.dm"
+#include "Code\Imagine3DView\Imagine3DView.dm"
+#include "Code\JsonLib\JsonLib.dm"
+#include "Code\Movement\Imagine3D.dm"
+#include "Code\Movement\JsonMapPixel.dm"
+#include "Code\Movement\Mob.dm"
+#include "Code\Movement\Movable.dm"
+#include "Code\Movement\Tick.dm"
+#include "Code\Movement\WrapAngle.dm"
+#include "Code\Movement\Bounding\Bounds.dm"
+#include "Code\Movement\Controls\Controls.dm"
+#include "Code\Movement\Controls\Imagine3D.dm"
+#include "Code\Movement\Controls\Imagine3DView.dm"
+#include "Code\Tick\Tick.dm"
+#include "Code\Tick\TickProc.dm"
+#include "Code\Utilities\SplitX.dm"
+#include "Demo\Demo.dm"
+#include "Demo\Tiles.dm"
+#include "Demo\Map.dmm"
+#include "Demo\Interface\Controls.dm"
+#include "Demo\Interface\Interface.dm"
+#include "Demo\Interface\Interface.dmf"
+// END_INCLUDE
+

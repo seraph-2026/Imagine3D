@@ -1,0 +1,88 @@
+macro "macros"
+	elem 
+		name = "F1"
+		command = "map3dOnly"
+	elem 
+		name = "F2"
+		command = "map3dAndOutput"
+	elem 
+		name = "F3"
+		command = "fullscreen"
+
+
+window "3d-map-pane"
+	elem "3d-map-pane"
+		type = MAIN
+		pos = 291,0
+		size = 640x480
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		background-color = none
+		is-visible = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		titlebar = false
+		statusbar = false
+		is-pane = true
+		outer-size = 654x494
+		outer-pos = 291,0
+		inner-pos = 7,7
+		screen-size = 1920x1032
+	elem "imagine-3d-browser"
+		type = BROWSER
+		pos = 0,0
+		size = 320x480
+		anchor1 = 0,0
+		anchor2 = 50,100
+		background-color = none
+		saved-params = ""
+		inner-background-color = none
+	elem "map"
+		type = MAP
+		pos = 320,0
+		size = 320x480
+		anchor1 = 50,0
+		anchor2 = 100,100
+		saved-params = "zoom;letterbox;zoom-mode"
+
+window "output-pane"
+	elem "output-pane"
+		type = MAIN
+		pos = 291,0
+		size = 640x480
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		saved-params = "pos;size;is-minimized;is-maximized"
+		titlebar = false
+		statusbar = false
+		is-pane = true
+	elem "output"
+		type = OUTPUT
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		is-default = true
+		saved-params = "max-lines"
+
+window "window"
+	elem "window"
+		type = MAIN
+		pos = 291,0
+		size = 960x655
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		background-color = #000000
+		saved-params = "pos;size;is-minimized;is-maximized=.options"
+		title = "Imagine3D"
+		statusbar = false
+		macro = "macros"
+	elem "pane-container"
+		type = CHILD
+		pos = 0,0
+		size = 960x655
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "splitter"
+		is-vert = true
+		show-splitter = false
+
