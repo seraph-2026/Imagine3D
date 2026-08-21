@@ -27,8 +27,8 @@ export class CameraManager {
 
     setCameraPosition(): void {
         // Only run if we have the position data
-        if (view.state.playerPixelLocAndAngle) {
-            const playerPixelLoc = view.state.playerPixelLocAndAngle;
+        if (view.state.pixelLoc) {
+            const playerPixelLoc = view.state.pixelLoc;
 
             const byondCoord = CoordinateMapper.byondPixelToCoordinates(
                 playerPixelLoc.x,
@@ -54,9 +54,7 @@ export class CameraManager {
             this.camera.rotation.y = this.yaw;
             this.camera.rotation.x = this.pitch;
         } else {
-            const playerPixelLoc = view.state.playerPixelLocAndAngle;
-            const angle = playerPixelLoc.angle; // Degrees
-
+            const angle = view.state.angle.angle; // Degrees
             // Otherwise, use the rotation angle we're given by BYOND
             this.camera.rotation.y = AngleMapper.byondAngleToThree(angle);
         }
@@ -67,6 +65,7 @@ export class CameraManager {
         this.mouseLook = true;
 
         const canvas = i3d_renderer.renderer.domElement;
+
         document.addEventListener("mousemove", (event) => {
             if (this.mouseLook && document.pointerLockElement === canvas) {
                 let newYaw = this.yaw + event.movementX * this.mouseSensitivity;
@@ -86,9 +85,9 @@ export class CameraManager {
                     this.lastMouseUpdate = now;
 
                     // Send yaw to DM (it doesn't have pitch)
-                    const playerPixelLoc = view.state.playerPixelLocAndAngle;
-                    playerPixelLoc.angle = AngleMapper.threeAngleToByond(this.yaw);
-                    view.setState("playerPixelLocAndAngle", playerPixelLoc);
+                    const angle = view.state.angle;
+                    angle.angle = AngleMapper.threeAngleToByond(this.yaw);
+                    view.setState("angle", JSON.stringify(angle));
                 }
             }
         });

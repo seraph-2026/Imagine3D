@@ -27298,8 +27298,8 @@ void main() {
           this.mouseUpdateInterval = 1e3 / 60;
         }
         setCameraPosition() {
-          if (view.state.playerPixelLocAndAngle) {
-            const playerPixelLoc = view.state.playerPixelLocAndAngle;
+          if (view.state.pixelLoc) {
+            const playerPixelLoc = view.state.pixelLoc;
             const byondCoord = CoordinateMapper.byondPixelToCoordinates(
               playerPixelLoc.x,
               playerPixelLoc.y,
@@ -27320,8 +27320,7 @@ void main() {
             this.camera.rotation.y = this.yaw;
             this.camera.rotation.x = this.pitch;
           } else {
-            const playerPixelLoc = view.state.playerPixelLocAndAngle;
-            const angle = playerPixelLoc.angle;
+            const angle = view.state.angle.angle;
             this.camera.rotation.y = AngleMapper.byondAngleToThree(angle);
           }
         }
@@ -27340,9 +27339,9 @@ void main() {
               const now = performance.now();
               if (now - this.lastMouseUpdate >= this.mouseUpdateInterval) {
                 this.lastMouseUpdate = now;
-                const playerPixelLoc = view.state.playerPixelLocAndAngle;
-                playerPixelLoc.angle = AngleMapper.threeAngleToByond(this.yaw);
-                view.setState("playerPixelLocAndAngle", playerPixelLoc);
+                const angle = view.state.angle;
+                angle.angle = AngleMapper.threeAngleToByond(this.yaw);
+                view.setState("angle", JSON.stringify(angle));
               }
             }
           });
@@ -27439,7 +27438,10 @@ void main() {
           i3d_renderer.animate();
           i3d_renderer.requestPointerLock();
           i3d_renderer.resizeToFitScreen();
-          i3d_renderer.cameraManager.enableMouseLook();
+          console.log(window.view.state);
+          if (window.view?.state?.settings?.mouseLookEnabled === 1) {
+            i3d_renderer.cameraManager.enableMouseLook();
+          }
           initializeKeyEvents();
         }
       }, 10);

@@ -1,8 +1,8 @@
 
 
-Settings
+GlobalSettings
     var
-        j_mouseLookEnabled
+        j_mouseLookEnabled = FALSE
 
     New(mouseLookEnabled)
         j_mouseLookEnabled = mouseLookEnabled

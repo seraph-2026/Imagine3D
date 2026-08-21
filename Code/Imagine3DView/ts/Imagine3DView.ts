@@ -17,7 +17,12 @@ const mapLoadInterval = setInterval(() => {
         i3d_renderer.animate();
         i3d_renderer.requestPointerLock();
         i3d_renderer.resizeToFitScreen();
-        i3d_renderer.cameraManager.enableMouseLook();
+        console.log(window.view.state);
+
+        if (window.view?.state?.settings?.mouseLookEnabled === 1) {
+            i3d_renderer.cameraManager.enableMouseLook();
+        }
+
         initializeKeyEvents();
     }
 }, 10);
