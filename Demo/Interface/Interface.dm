@@ -1,19 +1,38 @@
-
 mob
     Login()
         ..()
-        winset(src, "window.pane-container", "left=3d-map-pane") // Show the 3d map by default
+
+    var
+        showFullScreen = FALSE
+        show2DMap = FALSE
+        showOutput = FALSE
 
     verb
-        map3dOnly()
-            winset(src, "window.pane-container", "left=3d-map-pane") // Show the 3d map by default
-            winset(src, "window.pane-container", "right=") // Show the 3d map by default
+        show3dMap()
+            winset(src, "window.output", "is-visible=false")
+            winset(src, "map-window", "is-visible=false")
+            show2DMap = FALSE
 
-        map3dAndOutput()
-            winset(src, "window.pane-container", "left=3d-map-pane") // Show the 3d map by default
-            winset(src, "window.pane-container", "right=output-pane") // Show the 3d map by default
+        show2dMap()
+            if(!show2DMap)
+                winset(src, "map-window", "is-visible=true")
+                show2DMap = TRUE
+            else
+                winset(src, "map-window", "is-visible=false")
+                show2DMap = FALSE
 
-        fullscreen()
-            winset(src, "window", "titlebar=false;is-maximized=true")
-            winset(src, "window.pane-container", "left=3d-map-pane") // Show the 3d map by default
+        showOutput()
+            if(!showOutput)
+                showOutput = TRUE
+                winset(src, "window.output", "is-visible=true")
+            else
+                showOutput = FALSE
+                winset(src, "window.output", "is-visible=false")
 
+        showFullScreen()
+            if(showFullScreen)
+                winset(src, "window", "is-fullscreen=false")
+                showFullScreen = FALSE
+            else
+                winset(src, "window",  "is-fullscreen=true")
+                showFullScreen = TRUE

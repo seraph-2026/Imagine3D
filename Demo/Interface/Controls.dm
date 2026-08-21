@@ -2,6 +2,7 @@
 #define F1_MENU 100
 #define F2_MENU 101
 #define F3_MENU 102
+#define F4_MENU 103
 
 /**
     Customize keys using html key codes
@@ -19,7 +20,8 @@ var/keyMap = alist(
 
     "F1"=F1_MENU,
     "F2"=F2_MENU,
-    "F3"=F3_MENU
+    "F3"=F3_MENU,
+    "F4"=F4_MENU
 )
 
 mob
@@ -27,7 +29,7 @@ mob
         /**
             Scans impulses looking for recognized key events.
             Sets controls appropriately.
-            
+
             Movement is automatic based off controls if you
             have run Imagine3D.enableMovement()
         **/
@@ -48,12 +50,11 @@ mob
                     if(I3D_STRAFE_LEFT_DOWN) src.i3d_controls.leftStrafe = TRUE
                     if(I3D_STRAFE_RIGHT_DOWN) src.i3d_controls.rightStrafe = TRUE
 
-                    if(F1_MENU) map3dOnly()
-                    if(F2_MENU) map3dAndOutput()
-                    if(F3_MENU) fullscreen()
+                    if(F1_MENU) show3dMap()
+                    if(F2_MENU) show2dMap()
+                    if(F3_MENU) showOutput()
+                    if(F4_MENU) showFullScreen()
 
-
-            
             Imagine3D.clearKeyImpulses(src)
 
     Login()
@@ -69,6 +70,6 @@ mob
 proc
     handleInputForAllPlayers()
         for(var/client/nextClient)
-            var/mob/connectedMob = nextClient.mob 
+            var/mob/connectedMob = nextClient.mob
             connectedMob.handleKeyInput()
 

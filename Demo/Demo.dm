@@ -19,6 +19,5 @@ mob/Player
 		Move(locate(30,30,1))
 
 		// Run Imagine 3D
-		i3d_init("3d-map-pane","imagine-3d-browser")
+		i3d_init("window","imagine-3d-browser")
 		i3d_enableWebDevTools()
-
