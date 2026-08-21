@@ -2,12 +2,12 @@
 /*
 MAP_PLANE_MASTERS: 
 MAP_ZOOM: 0.500
-LAST_COMPILE_TIME: 1787288022
+LAST_COMPILE_TIME: 1787289116
 DIR: Code Code\Imagine3DView Demo Demo\Interface 
 AUTO_FILE_DIR: OFF
 MAP_ICON_TYPE: 0
 LAST_COMPILE_VERSION: 516.1686
-WINDOW: Demo\Map.dmm;Demo\Interface\Interface.dmf;Demo\Icons.dmi;Demo\Tiles.dm
+WINDOW: Demo\Map.dmm;Demo\Interface\Interface.dmf;Demo\Icons.dmi;Demo\Tiles.dm;Demo\Demo.dm
 FILE: Demo\Map.dmm
 MAP_INSTANCE_MODE: copy
 */

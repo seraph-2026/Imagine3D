@@ -8,8 +8,8 @@ mob
 		..()
 		if(src.rotateIcon)
 			src.i3d_originalTransform = transform // Used for the icon animation
-			src.i3d_rotateIcon()
 			src.angle = 180
+			src.i3d_rotateIcon()
 	
 	/**
 		If a client is connected, it's a player. Send their new location to the
