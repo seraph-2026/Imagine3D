@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { map } from "../Renderer/Map";
+import { map } from "../Renderer/I3D_Map";
 export class CoordinateMapper {
     /**
      * Convert BYOND coordinates to Three.js coordinates.

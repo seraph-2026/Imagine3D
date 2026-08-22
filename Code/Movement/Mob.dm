@@ -26,10 +26,10 @@ mob
 		i3d_updatePixelLoc()
 			// Adding half icon_size means we're sending the center point of the icon
 			//var/vector/worldIconSizeVector = i3d_splitX(world.icon_size)
-			var/JsonPixelLoc/jsonPixelLoc = new/JsonPixelLoc(src.pixloc.x, src.pixloc.y, src.pixloc.z)
-			src.imagine3DView.setState("pixelLoc", JsonLib.serializeDm(jsonPixelLoc))
+			var/I3D_PixelLoc/pixelLoc = new(src.pixloc.x, src.pixloc.y, src.pixloc.z)
+			src.imagine3DView.setState("pixelLoc", JsonLib.serializeDm(pixelLoc))
 
 		i3d_updateAngle()
-			var/JsonAngle/jsonAngle = new/JsonAngle(src.angle)
-			src.imagine3DView.setState("angle", JsonLib.serializeDm(jsonAngle))
+			var/I3D_Angle/angle = new/I3D_Angle(src.angle)
+			src.imagine3DView.setState("angle", JsonLib.serializeDm(angle))
 

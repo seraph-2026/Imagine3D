@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { map } from "./Map";
+import { map } from "./I3D_Map";
 import { i3d_renderer } from "./I3D_Renderer";
 const tileSideGeometry = new THREE.PlaneGeometry(1, 1);
 export class Tile {

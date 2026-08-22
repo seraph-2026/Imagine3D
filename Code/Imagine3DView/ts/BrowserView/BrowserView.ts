@@ -1,5 +1,3 @@
-import { MapJson } from "../JsonTypes/JsonMap";
-
 export class BrowserView {
     state: {
         [key: string]: any;

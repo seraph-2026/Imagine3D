@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { view } from "../BrowserView/BrowserView";
 import { CoordinateMapper } from "../Utilities/CoordinateMapper";
-import { AngleMapper } from "../Utilities/AngleMapper";
+import { AngleMapper } from "../Utilities/I3D_AngleMapper";
 import { i3d_renderer } from "./I3D_Renderer";
 export class CameraManager {
     constructor(camera) {

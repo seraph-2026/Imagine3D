@@ -65,7 +65,7 @@
             "label": "Imagine3D - Bundle",
             "type": "shell",
             "command": "npx",
-            "args": ["esbuild", "ts/Imagine3DView.ts", "--bundle", "--outfile=./build/imagine3d.bundle.js", "--watch"],
+            "args": ["esbuild", "ts/Run.ts", "--bundle", "--outfile=./build/imagine3d.bundle.js", "--watch"],
             "options": {
                 "cwd": "${workspaceFolder}/Code/Imagine3DView"
             },

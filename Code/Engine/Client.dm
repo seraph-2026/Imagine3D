@@ -21,7 +21,7 @@ client
         loadIconsToBrowser()
             var/list/resourceList = global_map.j_resourceMap.j_resources // The map contains all the resources required
             
-            for(var/Resource/nextResource in resourceList)
+            for(var/I3D_Resource/nextResource in resourceList)
                 var/icon/iconToStore = new(nextResource.icon, nextResource.icon_state)
                 src.mob << browse_rsc(iconToStore, nextResource.j_png) 
                 

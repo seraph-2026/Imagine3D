@@ -2,7 +2,7 @@
 world
     New()
         ..()
-        global_map = new/Map()
+        global_map = new/I3D_Map()
         global_map.update()
 
     proc

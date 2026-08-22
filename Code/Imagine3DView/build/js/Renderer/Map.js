@@ -24,7 +24,7 @@ export class Map {
         this.icon_size_x = mapJson.icon_size_x;
         this.icon_size_y = mapJson.icon_size_y;
         this.jsonTiles = mapJson.tileMap.tiles;
-        this.resources = mapJson.resourceMap.resources;
+        this.resources = mapJson.I3D_ResourceMap.resources;
         this.textures = this.createTextures();
         this.materials = this.createMaterials();
         this.tiles = this.loadTiles();

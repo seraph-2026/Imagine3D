@@ -1,5 +1,5 @@
-import { i3d_renderer } from "./Renderer/I3D_Renderer";
-import { map } from "./Renderer/Map";
+import { i3d_renderer } from "./I3D/Renderer/I3D_Renderer";
+import { map } from "./I3D/Renderer/I3D_Map";
 import { initializeKeyEvents } from "./KeyHandling/KeyDown";
 console.log("Imagine3DView");
 console.log("- Successfully started");
