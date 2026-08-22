@@ -16,14 +16,3 @@ BrowserView/Imagine3DView
         keyUp(htmlKeyCode)
             if(Imagine3D.captureImpulses)
                 keyImpulses += htmlKeyCode + "+UP" // +UP is a DM standard
-
-    //     // F Keys
-    //     keyDownF1()
-    //         owner.map3dOnly()
-
-    //     keyDownF2()
-    //         owner.map3dAndOutput()
-
-    //     keyDownF3()
-    //         owner.fullscreen()
-

@@ -5,7 +5,6 @@
 **/
 Imagine3D
     var/movementEnabled = FALSE
-
     proc
         enableMovement()
             movementEnabled = TRUE

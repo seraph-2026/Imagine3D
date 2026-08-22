@@ -7,6 +7,8 @@ Imagine3D
     proc
         setZIconSize(number)
             icon_size_z = number
+        
+        registerTicks() // Overriden by tick definitions
 
 mob
     proc
@@ -17,7 +19,11 @@ mob
             world << " src.imagine3DView [src.imagine3DView]"
 
             // Inform browser of player
-            i3d_updatePlayerPosition()
+            i3d_updatePixelLoc()
+            i3d_updateAngle()
+
+            // Update using the latest global settings
+            i3d_updateGlobalSettings()
 
             // Draw 3D map in the browser
             src.client.drawLatestMap()
@@ -25,15 +31,9 @@ mob
             // Start running ticks which are used by the components of this library
             // First one at the time of this comment was movement tick
             Imagine3D.registerTicks()
-
-        i3d_updatePlayerPosition()
-            // Adding half icon_size means we're sending the center point of the icon
-            //var/vector/worldIconSizeVector = i3d_splitX(world.icon_size)
-            var/JsonMapPixel/jsonMapPixel = new/JsonMapPixel(src.pixloc.x, src.pixloc.y, src.pixloc.z, src.angle)
-            src.imagine3DView.setState("playerPixelLocation", JsonLib.serializeDm(jsonMapPixel))
         
         i3d_enableWebDevTools()
             winset(src.client, null, "browser-options=devtools")
 
         i3d_disableWebDevTools()
-            winset(src.client, null, "browser-options=") 
+            winset(src.client, null, "browser-options=")

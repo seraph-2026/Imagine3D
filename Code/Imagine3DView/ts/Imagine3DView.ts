@@ -1,5 +1,5 @@
 import { view } from "./BrowserView/BrowserView";
-import { renderer } from "./Renderer/Renderer";
+import { i3d_renderer } from "./Renderer/I3D_Renderer";
 import { map } from "./Renderer/Map";
 import { initializeKeyEvents } from "./KeyHandling/KeyDown";
 
@@ -14,9 +14,15 @@ const mapLoadInterval = setInterval(() => {
         clearInterval(mapLoadInterval);
 
         console.log("- Beginning animation");
-        renderer.animate();
-        renderer.requestPointerLock();
-        renderer.resizeToFitScreen();
+        i3d_renderer.animate();
+        i3d_renderer.requestPointerLock();
+        i3d_renderer.resizeToFitScreen();
+        console.log(window.view.state);
+
+        if (window.view?.state?.settings?.mouseLookEnabled === 1) {
+            i3d_renderer.cameraManager.enableMouseLook();
+        }
+
         initializeKeyEvents();
     }
 }, 10);

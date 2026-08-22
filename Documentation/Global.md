@@ -1,4 +1,3 @@
-
 ## Imagine3D.enableMovement()
 
 By using this it will switch on the movement system that comes with Imagine3D. From then on, if you change the i3d_controls
@@ -13,3 +12,8 @@ his forward along his angle.
 See Imagine3D.enableMovement() for more details. This simply deactivates the built-in movement system. This strongly disables
 any related funcitonality. The only internal work happening now is to check that the movement is deactivated, then immediately
 return.
+
+## Imagine3D.enableMouseLook()
+
+If enabled, every mob with a client will have it's angle updated based on Mouse yaw input from the browser. It will also set
+mouse look mode in the browser so it starts sending yaw updates.

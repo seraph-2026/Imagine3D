@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { map } from "./Map";
-import { renderer } from "./Renderer";
+import { i3d_renderer } from "./I3D_Renderer";
 const tileSideGeometry = new THREE.PlaneGeometry(1, 1);
 export class Tile {
     constructor(tileJson, x, y, z) {
@@ -39,7 +39,7 @@ export class Tile {
         this.objectGroup.add(mesh);
     }
     addToScene() {
-        renderer.scene.add(this.objectGroup);
+        i3d_renderer.scene.add(this.objectGroup);
     }
 }
 //# sourceMappingURL=Tile.js.map

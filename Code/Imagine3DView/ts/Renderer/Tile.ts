@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { map } from "./Map";
 import { TileJson } from "../JsonTypes/TileJson";
-import { renderer } from "./Renderer";
+import { i3d_renderer } from "./I3D_Renderer";
 
 const tileSideGeometry = new THREE.PlaneGeometry(1, 1);
 
@@ -57,6 +57,6 @@ export class Tile {
     }
 
     addToScene(): void {
-        renderer.scene.add(this.objectGroup);
+        i3d_renderer.scene.add(this.objectGroup);
     }
 }
