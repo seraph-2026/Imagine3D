@@ -1,8 +1,6 @@
 import * as THREE from "three";
-import { view } from "../../BrowserView/BrowserView";
 import { CoordinateMapper } from "../Utilities/CoordinateMapper";
 import { AngleMapper } from "../Utilities/AngleMapper";
-import { renderer } from "./Renderer";
 
 export class CameraManager {
     camera: THREE.Camera;
@@ -27,8 +25,8 @@ export class CameraManager {
 
     setCameraPosition(): void {
         // Only run if we have the position data
-        if (view.state.pixelLoc) {
-            const playerPixelLoc = view.state.pixelLoc;
+        if (window.view.state.pixelLoc) {
+            const playerPixelLoc = window.view.state.pixelLoc;
 
             const byondCoord = CoordinateMapper.byondPixelToCoordinates(
                 playerPixelLoc.x,
@@ -54,7 +52,7 @@ export class CameraManager {
             this.camera.rotation.y = this.yaw;
             this.camera.rotation.x = this.pitch;
         } else {
-            const angle = view.state.angle.angle; // Degrees
+            const angle = window.view.state.angle.angle; // Degrees
             // Otherwise, use the rotation angle we're given by BYOND
             this.camera.rotation.y = AngleMapper.byondAngleToThree(angle);
         }
@@ -64,7 +62,7 @@ export class CameraManager {
         console.log("- Mouse look enabled");
         this.mouseLook = true;
 
-        const canvas = renderer.renderer.domElement;
+        const canvas = window.i3d.renderer.threeRenderer.domElement;
 
         document.addEventListener("mousemove", (event) => {
             if (this.mouseLook && document.pointerLockElement === canvas) {
@@ -85,9 +83,9 @@ export class CameraManager {
                     this.lastMouseUpdate = now;
 
                     // Send yaw to DM (it doesn't have pitch)
-                    const angle = view.state.angle;
+                    const angle = window.view.state.angle;
                     angle.angle = AngleMapper.threeAngleToByond(this.yaw);
-                    view.setState("angle", JSON.stringify(angle));
+                    window.view.setState("angle", JSON.stringify(angle));
                 }
             }
         });

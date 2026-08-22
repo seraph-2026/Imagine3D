@@ -1,8 +1,6 @@
 import * as THREE from "three";
-import { view } from "../../BrowserView/BrowserView";
 import { CoordinateMapper } from "../Utilities/CoordinateMapper";
 import { AngleMapper } from "../Utilities/AngleMapper";
-import { renderer } from "./Renderer";
 export class CameraManager {
     constructor(camera) {
         console.log("CameraManager");
@@ -17,8 +15,8 @@ export class CameraManager {
     }
     setCameraPosition() {
         // Only run if we have the position data
-        if (view.state.pixelLoc) {
-            const playerPixelLoc = view.state.pixelLoc;
+        if (window.view.state.pixelLoc) {
+            const playerPixelLoc = window.view.state.pixelLoc;
             const byondCoord = CoordinateMapper.byondPixelToCoordinates(playerPixelLoc.x, playerPixelLoc.y, playerPixelLoc.z);
             const threeCoord = CoordinateMapper.byondToThree(byondCoord.x, byondCoord.y, byondCoord.z);
             this.camera.position.x = threeCoord.x + 1;
@@ -38,7 +36,7 @@ export class CameraManager {
             this.camera.rotation.x = this.pitch;
         }
         else {
-            const angle = view.state.angle.angle; // Degrees
+            const angle = window.view.state.angle.angle; // Degrees
             // Otherwise, use the rotation angle we're given by BYOND
             this.camera.rotation.y = AngleMapper.byondAngleToThree(angle);
         }
@@ -46,7 +44,7 @@ export class CameraManager {
     enableMouseLook() {
         console.log("- Mouse look enabled");
         this.mouseLook = true;
-        const canvas = renderer.renderer.domElement;
+        const canvas = window.i3d.renderer.threeRenderer.domElement;
         document.addEventListener("mousemove", (event) => {
             if (this.mouseLook && document.pointerLockElement === canvas) {
                 let newYaw = this.yaw + event.movementX * this.mouseSensitivity;
@@ -61,9 +59,9 @@ export class CameraManager {
                 if (now - this.lastMouseUpdate >= this.mouseUpdateInterval) {
                     this.lastMouseUpdate = now;
                     // Send yaw to DM (it doesn't have pitch)
-                    const angle = view.state.angle;
+                    const angle = window.view.state.angle;
                     angle.angle = AngleMapper.threeAngleToByond(this.yaw);
-                    view.setState("angle", JSON.stringify(angle));
+                    window.view.setState("angle", JSON.stringify(angle));
                 }
             }
         });

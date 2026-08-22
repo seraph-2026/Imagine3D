@@ -1,13 +1,10 @@
 import * as THREE from "three";
-import { CoordinateMapper } from "../Utilities/CoordinateMapper";
-import { AngleMapper } from "../Utilities/AngleMapper";
-import { view } from "../../BrowserView/BrowserView";
 import { CameraManager } from "./CameraManager";
 
 export class Renderer {
     cameraManager: CameraManager;
     scene: THREE.Scene;
-    renderer: THREE.WebGLRenderer;
+    threeRenderer: THREE.WebGLRenderer;
 
     constructor() {
         console.log("Renderer");
@@ -16,13 +13,13 @@ export class Renderer {
         const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.cameraManager = new CameraManager(camera);
 
-        this.renderer = new THREE.WebGLRenderer();
+        this.threeRenderer = new THREE.WebGLRenderer();
 
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.domElement.style.transform = "scaleX(-1)";
-        document.body.appendChild(this.renderer.domElement);
+        this.threeRenderer.setSize(window.innerWidth, window.innerHeight);
+        this.threeRenderer.domElement.style.transform = "scaleX(-1)";
+        document.body.appendChild(this.threeRenderer.domElement);
 
-        console.log("- Succesfully constructured");
+        console.log("- Succesfully const2ructured");
         console.log("- Awaiting signal to animate()");
     }
 
@@ -30,14 +27,14 @@ export class Renderer {
         this.cameraManager.setCameraPosition();
         this.cameraManager.setCameraAngle();
 
-        this.renderer.render(this.scene, this.cameraManager.camera);
+        this.threeRenderer.render(this.scene, this.cameraManager.camera);
 
         requestAnimationFrame(() => this.animate());
     }
 
     requestPointerLock(): void {
         console.log("- Requesting pointer lock on canvas");
-        const canvas: HTMLCanvasElement = renderer.renderer.domElement;
+        const canvas: HTMLCanvasElement = this.threeRenderer.domElement;
 
         canvas.addEventListener("click", () => {
             canvas.requestPointerLock();
@@ -46,12 +43,10 @@ export class Renderer {
 
     resizeToFitScreen(): void {
         const resize = (): void => {
-            this.renderer.setSize(window.innerWidth, window.innerHeight);
+            this.threeRenderer.setSize(window.innerWidth, window.innerHeight);
         };
 
         window.addEventListener("resize", resize);
         resize();
     }
 }
-
-export const renderer = new Renderer();

@@ -1,11 +1,11 @@
 import { BrowserView } from "../BrowserView/BrowserView";
-import { Map } from "../I3D/Renderer/Map";
+import { I3DManager } from "../I3D";
 
 export {};
 
 declare global {
     interface Window {
         view: BrowserView;
-        map: Map;
+        i3d: I3DManager;
     }
 }

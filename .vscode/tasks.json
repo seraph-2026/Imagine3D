@@ -73,8 +73,18 @@
             "problemMatcher": []
         },
         {
+            "label": "Imagine3D - Clean",
+            "type": "shell",
+            "command": "npx",
+            "args": ["rimraf", "build/js"],
+            "options": {
+                "cwd": "${workspaceFolder}/Code/Imagine3DView"
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Imagine3D - Watch",
-            "dependsOn": ["Imagine3D - TypeScript", "Imagine3D - Bundle"],
+            "dependsOn": ["Imagine3D - Clean", "Imagine3D - TypeScript", "Imagine3D - Bundle"],
             "dependsOrder": "parallel",
             "runOptions": {
                 "runOn": "folderOpen"

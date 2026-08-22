@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { map } from "../Renderer/Map";
 export class CoordinateMapper {
     /**
      * Convert BYOND coordinates to Three.js coordinates.
@@ -17,7 +16,7 @@ export class CoordinateMapper {
      * Convert BYOND pixel location to BYOND coordinates
      */
     static byondPixelToCoordinates(bx, by, bz) {
-        return new THREE.Vector3(bx / map.icon_size_x, by / map.icon_size_x, bz);
+        return new THREE.Vector3(bx / window.i3d.map.icon_size_x, by / window.i3d.map.icon_size_x, bz);
     }
 }
 //# sourceMappingURL=CoordinateMapper.js.map

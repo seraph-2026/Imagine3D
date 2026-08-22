@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { map } from "../Renderer/Map";
 
 export class CoordinateMapper {
     /**
@@ -20,6 +19,6 @@ export class CoordinateMapper {
      * Convert BYOND pixel location to BYOND coordinates
      */
     static byondPixelToCoordinates(bx: number, by: number, bz: number): THREE.Vector3 {
-        return new THREE.Vector3(bx / map.icon_size_x, by / map.icon_size_x, bz);
+        return new THREE.Vector3(bx / window.i3d.map.icon_size_x, by / window.i3d.map.icon_size_x, bz);
     }
 }
