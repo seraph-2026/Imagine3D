@@ -7,7 +7,7 @@ world
 	New()
 		..()
 		Imagine3D.enableMovement()
-		Imagine3D.enableMouseLook()
+//		Imagine3D.enableMouseLook()
 
 mob/Player
 	icon = 'Icons.dmi'
