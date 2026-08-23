@@ -1,4 +1,3 @@
-
 Imagine3D
     var
         preTickProcs = list()
@@ -14,8 +13,3 @@ Imagine3D
   
         registerPostTickProcLast(procName, procArgs, datum/parentDatum)
             postTickProcs += new/I3D_TickProc(procName, procArgs, parentDatum)
-
-world/Tick()
-    ..()
-    for(var/I3D_TickProc/nextTickProc in (Imagine3D.preTickProcs | Imagine3D.tickProcs | Imagine3D.postTickProcs))
-        nextTickProc.runProc()
