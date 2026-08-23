@@ -27474,10 +27474,10 @@ void main() {
       init_TickLoop();
       I3DManager = class {
         constructor() {
-          this.browserView = new StateManager();
+          this.stateManager = new StateManager();
           this.renderer = new Renderer();
-          this.map = new Map2(this.browserView);
-          this.tickLoop = new TickLoop(this.browserView);
+          this.map = new Map2(this.stateManager);
+          this.tickLoop = new TickLoop(this.stateManager);
         }
       };
       manager = new I3DManager();
