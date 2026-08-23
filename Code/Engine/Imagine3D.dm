@@ -11,12 +11,12 @@ Imagine3D
         registerTicks() // Overriden by tick definitions
 
 mob
-    var/I3D_View/imagine3DView
+    var/I3D_View/i3d_view
 
     proc
         i3d_init(windowId, browserControlId)
             // Build them a browser
-            src.imagine3DView = new/I3D_View(windowId, browserControlId, src)
+            src.i3d_view = new/I3D_View(windowId, browserControlId, src)
 
             // Inform browser of player
             i3d_updatePixelLoc()

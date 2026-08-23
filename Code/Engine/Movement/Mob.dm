@@ -18,7 +18,7 @@ mob
 	**/
 	i3d_Move()
 		..()
-		if(src.client && src.imagine3DView)
+		if(src.client && src.i3d_view)
 			i3d_updatePixelLoc()
 			i3d_updateAngle()
 
@@ -27,14 +27,14 @@ mob
 			// Adding half icon_size means we're sending the center point of the icon
 			//var/vector/worldIconSizeVector = i3d_splitX(world.icon_size)
 			var/I3D_PixelLoc/pixelLoc = new(src.pixloc.x, src.pixloc.y, src.pixloc.z)
-			src.imagine3DView.setState("pixelLoc", JsonLib.serializeDm(pixelLoc))
+			src.i3d_view.setState("pixelLoc", JsonLib.serializeDm(pixelLoc))
 
 
 		// Change angle and inform state of update
 		i3d_updateAngle()
-			// if(imagine3DView) // Only run if the browser exists
+			// if(i3d_view) // Only run if the browser exists
 			// 	// var/I3D_Angle/angle = new/I3D_Angle(src.angle)
-			// 	// var/I3D_StateComponent/I3D_Player/playerState = imagine3DView.state.j_player
+			// 	// var/I3D_StateComponent/I3D_Player/playerState = i3d_view.state.j_player
 			// 	// playerState.j_angle = angle
 			// 	// playerState.hasChanged = TRUE
 

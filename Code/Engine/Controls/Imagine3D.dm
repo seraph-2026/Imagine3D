@@ -11,15 +11,15 @@ Imagine3D
             captureImpulses = TRUE
             
             // It's possible the browser doesn't exist yet
-            if(player.imagine3DView)
-                return player.imagine3DView.keyImpulses
+            if(player.i3d_view)
+                return player.i3d_view.keyImpulses
             else
                 return list() 
 
         clearKeyImpulses(var/mob/player)
             
-            if(player.imagine3DView)
-                player.imagine3DView.keyImpulses.len = 0
+            if(player.i3d_view)
+                player.i3d_view.keyImpulses.len = 0
             else
                 return list()
 

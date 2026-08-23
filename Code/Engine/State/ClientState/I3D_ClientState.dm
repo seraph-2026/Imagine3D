@@ -26,6 +26,6 @@ client
             set instant = 1
 
             var/I3D_ClientState/incomingClientState = JsonLib.deserializeJson(url_decode(message))
-            src.mob.imagine3DView.clientState.j_browser = incomingClientState.j_browser
+            src.mob.i3d_view.clientState.j_browser = incomingClientState.j_browser
 
-            world << "\nFinal client state [src.mob.imagine3DView.clientState.toJsonString()]"
+            world << "\nFinal client state [src.mob.i3d_view.clientState.toJsonString()]"

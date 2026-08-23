@@ -2,7 +2,7 @@
 mob
     proc
         updateMouseAngle()
-            // if(src.imagine3DView) // The view might not exist yet
-            //     if(src.imagine3DView.state["angle"])
-            //         var/I3D_Angle/angle = JsonLib.deserializeJson(src.imagine3DView.gameState["angle"])
+            // if(src.i3d_view) // The view might not exist yet
+            //     if(src.i3d_view.state["angle"])
+            //         var/I3D_Angle/angle = JsonLib.deserializeJson(src.i3d_view.gameState["angle"])
             //         angle = angle.j_angle

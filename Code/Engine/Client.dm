@@ -14,7 +14,7 @@ client
                 var/mob/owner = src.mob
 
                 // Output the current map to client's browser
-                owner.imagine3DView.setState("map", JsonLib.serializeDm(global_map))
+                owner.i3d_view.setState("map", JsonLib.serializeDm(global_map))
         
         // Convert icons & states into pngs, load into client rsc file
         // RSC resources will be accessible in the browser

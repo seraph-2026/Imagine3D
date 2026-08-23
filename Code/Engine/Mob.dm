@@ -3,5 +3,5 @@
 mob
     proc
         initImagine3D(windowId, browserControlId)
-            imagine3DView = new/I3D_View(windowId, browserControlId)
+            i3d_view = new/I3D_View(windowId, browserControlId)
             src.client.drawLatestMap()
