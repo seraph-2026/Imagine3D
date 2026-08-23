@@ -13,7 +13,7 @@ export class I3DManager {
         this.browserView = new BrowserView();
         this.renderer = new Renderer();
         this.map = new Map(this.browserView);
-        this.tickLoop = new TickLoop();
+        this.tickLoop = new TickLoop(this.browserView);
     }
 }
 

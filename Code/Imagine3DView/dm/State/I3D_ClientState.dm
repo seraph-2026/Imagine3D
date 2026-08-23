@@ -2,14 +2,10 @@ I3D_ClientState
     var
         I3D_StateComponent/I3D_BrowserState/j_browser
         mob/owner
-        j_tickLag
-        j_hasChanged
 
     New(windowId, controlId, mob/owner)
         src.j_browser = new(windowId, controlId)
         src.owner = owner
-        j_tickLag = world.tick_lag
-        j_hasChanged = 0
 
     proc
         initializeClientState()
@@ -20,17 +16,16 @@ I3D_ClientState
             spawn()
                 while(!src.j_browser.j_isReady)
                     initializeClientState()
-                    sleep(10)
+                    world << src.toJsonString()
+                    sleep(100)
 
 client
     verb
         setClientState(message as text)
             set hidden = 1
             set instant = 1
-            world << "Recieved client state"
+
             var/I3D_ClientState/incomingClientState = JsonLib.deserializeJson(url_decode(message))
-            incomingClientState.owner = src.mob
-            src.mob.imagine3DView.clientState = incomingClientState
+            src.mob.imagine3DView.clientState.j_browser = incomingClientState.j_browser
 
-
-
+            world << "\nFinal client state [src.mob.imagine3DView.clientState.toJsonString()]"

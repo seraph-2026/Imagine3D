@@ -27355,11 +27355,12 @@ void main() {
             browser: {
               windowId: null,
               controlId: null,
-              isReady: null
-            },
-            tickLag: null,
-            hasChanged: 0
+              isReady: null,
+              tickLag: null,
+              hasChanged: 0
+            }
           };
+          this.initialized = false;
           console.log("BrowserView");
           console.log("- Successfully created");
           console.log("- Listening for state changes");
@@ -27376,21 +27377,27 @@ void main() {
         }
         // Name is not used but is required by DM
         initializeClientState(_name, value) {
-          console.log("- Setting client state");
-          try {
-            this.clientState = JSON.parse(decodeURIComponent(value));
-            this.clientState.browser.isReady = 1;
-            this.clientState.hasChanged = 1;
-            if (this.clientState.tickLag) {
-              manager.tickLoop.start(this.clientState.tickLag);
-            } else {
-              throw Error(
-                "Was unable to start the network tick process because no tickLag was defined in this.clientState.tickLag."
-              );
+          if (!this.initialized) {
+            try {
+              console.log("- Initailizing client state");
+              this.clientState = JSON.parse(decodeURIComponent(value));
+              this.clientState.browser.isReady = 1;
+              this.clientState.browser.hasChanged = 1;
+              if (this.clientState.browser.tickLag) {
+                manager.tickLoop.start(this.clientState.browser.tickLag);
+              } else {
+                throw Error(
+                  "Was unable to start the network tick process because no tickLag was defined in this.clientState.tickLag."
+                );
+              }
+            } catch (exception) {
+              console.error(exception);
+              return;
             }
-          } catch (exception) {
-            console.error(exception);
-            return;
+            console.log("- Client state successfully initialized");
+            this.initialized = true;
+          } else {
+            console.log("- Server attempted to initialize client state but it had already initialized");
           }
         }
         // Name is not used but is required by DM
@@ -27398,6 +27405,7 @@ void main() {
           console.log("- Reflecting client state");
           try {
             const clientStateToSend = encodeURIComponent(JSON.stringify(this.clientState));
+            console.log("- Sending client state: ", JSON.stringify(this.clientState));
             BYOND.command(`setClientState ${clientStateToSend}`);
           } catch (exception) {
             console.error(exception);
@@ -27422,12 +27430,14 @@ void main() {
   var init_TickLoop = __esm({
     "ts/I3D/Network/TickLoop.ts"() {
       "use strict";
-      init_I3DManager();
       TickLoop = class {
+        constructor(browserView) {
+          this.browserView = browserView;
+        }
         clientTick() {
-          if (manager.browserView.clientState.hasChanged) {
-            manager.browserView.clientState.hasChanged = 0;
-            manager.browserView.reflectClientState();
+          if (this.browserView.clientState.browser.hasChanged) {
+            this.browserView.clientState.browser.hasChanged = 0;
+            this.browserView.reflectClientState();
           }
         }
         start(tickLag) {
@@ -27467,7 +27477,7 @@ void main() {
           this.browserView = new BrowserView();
           this.renderer = new Renderer();
           this.map = new Map2(this.browserView);
-          this.tickLoop = new TickLoop();
+          this.tickLoop = new TickLoop(this.browserView);
         }
       };
       manager = new I3DManager();

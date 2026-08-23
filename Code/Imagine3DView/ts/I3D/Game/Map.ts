@@ -4,7 +4,6 @@ import { TileJson } from "../Transport/TileJson";
 import { ResourceJson } from "../Transport/ResourceJson";
 import { CoordinateMapper } from "../Utilities/CoordinateMapper";
 import { Tile } from "./Tile";
-import { manager } from "../I3DManager";
 import { BrowserView } from "../../BrowserView/BrowserView";
 
 export class Map {
