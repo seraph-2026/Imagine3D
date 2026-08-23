@@ -27270,21 +27270,21 @@ void main() {
       init_CoordinateMapper();
       init_Tile();
       Map2 = class {
-        constructor(browserView) {
+        constructor(stateManager) {
           this.isLoaded = false;
-          this.browserView = browserView;
+          this.stateManager = stateManager;
           console.log("Map");
           console.log("- Succesfully constructured");
           console.log("- Awaiting to recieve JsonMap from BYOND (using view.gameState)");
           this.waitForJsonMapThenLoad();
         }
         waitForJsonMapThenLoad() {
-          if (!this.browserView.gameState.map) {
+          if (!this.stateManager.gameState.map) {
             setTimeout(() => this.waitForJsonMapThenLoad(), 10);
             return;
           }
           console.log("- Recieved JsonMap. Initializing Map");
-          const mapJson = this.browserView.gameState.map;
+          const mapJson = this.stateManager.gameState.map;
           this.tileIdMap = mapJson.tileIdMap;
           this.maxX = mapJson.tileIdMap.length;
           this.maxY = mapJson.tileIdMap[0].length;
@@ -27343,12 +27343,12 @@ void main() {
   });
 
   // ts/I3D/BrowserView/BrowserView.ts
-  var BrowserView;
+  var StateManager;
   var init_BrowserView = __esm({
     "ts/I3D/BrowserView/BrowserView.ts"() {
       "use strict";
       init_I3D();
-      BrowserView = class {
+      StateManager = class {
         constructor() {
           this.gameState = {};
           this.clientState = {
@@ -27431,13 +27431,13 @@ void main() {
     "ts/I3D/Network/TickLoop.ts"() {
       "use strict";
       TickLoop = class {
-        constructor(browserView) {
-          this.browserView = browserView;
+        constructor(stateManager) {
+          this.stateManager = stateManager;
         }
         clientTick() {
-          if (this.browserView.clientState.browser.hasChanged) {
-            this.browserView.clientState.browser.hasChanged = 0;
-            this.browserView.reflectClientState();
+          if (this.stateManager.clientState.browser.hasChanged) {
+            this.stateManager.clientState.browser.hasChanged = 0;
+            this.stateManager.reflectClientState();
           }
         }
         start(tickLag) {
@@ -27474,7 +27474,7 @@ void main() {
       init_TickLoop();
       I3DManager = class {
         constructor() {
-          this.browserView = new BrowserView();
+          this.browserView = new StateManager();
           this.renderer = new Renderer();
           this.map = new Map2(this.browserView);
           this.tickLoop = new TickLoop(this.browserView);

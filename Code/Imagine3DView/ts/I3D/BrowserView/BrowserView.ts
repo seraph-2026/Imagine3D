@@ -1,7 +1,7 @@
 import { manager } from "..";
 import { ClientStateJson } from "../Transport/ClientStateJson";
 
-export class BrowserView {
+export class StateManager {
     gameState: {
         [key: string]: any;
     } = {};

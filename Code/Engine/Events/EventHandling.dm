@@ -7,11 +7,11 @@
     the JSON state.
 **/
 
-client/Topic(href, href_list[])
-    . = ..()
-    if(href_list.len == 2)
-        if(href_list["viewEvent"] == "reflectState")
-            src.mob.captureEvent(href_list["value"])
+// client/Topic(href, href_list[])
+//     . = ..()
+//     if(href_list.len == 2)
+//         if(href_list["viewEvent"] == "reflectState")
+//             src.mob.captureEvent(href_list["value"])
 
 client
     verb

@@ -1,18 +1,18 @@
-import { BrowserView } from "../BrowserView/BrowserView";
+import { StateManager } from "../BrowserView/BrowserView";
 
 export class TickLoop {
-    browserView: BrowserView;
+    stateManager: StateManager;
     tickLag?: number;
     private intervalId?: ReturnType<typeof setInterval>;
 
-    constructor(browserView: BrowserView) {
-        this.browserView = browserView;
+    constructor(stateManager: StateManager) {
+        this.stateManager = stateManager;
     }
 
     clientTick(): void {
-        if (this.browserView.clientState.browser.hasChanged) {
-            this.browserView.clientState.browser.hasChanged = 0;
-            this.browserView.reflectClientState();
+        if (this.stateManager.clientState.browser.hasChanged) {
+            this.stateManager.clientState.browser.hasChanged = 0;
+            this.stateManager.reflectClientState();
         }
     }
 

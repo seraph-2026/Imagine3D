@@ -4,7 +4,7 @@ import { TileJson } from "../Transport/TileJson";
 import { ResourceJson } from "../Transport/ResourceJson";
 import { CoordinateMapper } from "../Utilities/CoordinateMapper";
 import { Tile } from "./Tile";
-import { BrowserView } from "../BrowserView/BrowserView";
+import { StateManager } from "../BrowserView/BrowserView";
 
 export class Map {
     icon_size_x!: number;
@@ -23,10 +23,10 @@ export class Map {
     materials!: THREE.MeshBasicMaterial[];
 
     isLoaded: boolean = false;
-    browserView: BrowserView;
+    stateManager: StateManager;
 
-    constructor(browserView: BrowserView) {
-        this.browserView = browserView;
+    constructor(stateManager: StateManager) {
+        this.stateManager = stateManager;
         console.log("Map");
         console.log("- Succesfully constructured");
         console.log("- Awaiting to recieve JsonMap from BYOND (using view.gameState)");
@@ -34,14 +34,14 @@ export class Map {
     }
 
     private waitForJsonMapThenLoad(): void {
-        if (!this.browserView.gameState.map) {
+        if (!this.stateManager.gameState.map) {
             setTimeout(() => this.waitForJsonMapThenLoad(), 10);
             return;
         }
 
         console.log("- Recieved JsonMap. Initializing Map");
 
-        const mapJson: MapJson = this.browserView.gameState.map;
+        const mapJson: MapJson = this.stateManager.gameState.map;
 
         this.tileIdMap = mapJson.tileIdMap;
 

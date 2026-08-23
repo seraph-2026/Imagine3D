@@ -1,16 +1,16 @@
 import { Renderer } from "./Renderer/Renderer";
 import { Map } from "./Game/Map";
-import { BrowserView } from "./BrowserView/BrowserView";
+import { StateManager } from "./BrowserView/BrowserView";
 import { TickLoop } from "./Network/TickLoop";
 
 export class I3DManager {
     renderer: Renderer;
     map: Map;
-    browserView: BrowserView;
+    browserView: StateManager;
     tickLoop: TickLoop;
 
     constructor() {
-        this.browserView = new BrowserView();
+        this.browserView = new StateManager();
         this.renderer = new Renderer();
         this.map = new Map(this.browserView);
         this.tickLoop = new TickLoop(this.browserView);
