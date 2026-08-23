@@ -56,13 +56,13 @@
             "command": "npx",
             "args": ["tsc", "--watch"],
             "options": {
-                "cwd": "${workspaceFolder}/Code/Imagine3DView"
+                "cwd": "${workspaceFolder}/Code/I3D_View"
             },
             "isBackground": true,
             "problemMatcher": {
                 "owner": "typescript",
                 "applyTo": "closedDocuments",
-                "fileLocation": ["relative", "${workspaceFolder}/Code/Imagine3DView"],
+                "fileLocation": ["relative", "${workspaceFolder}/Code/I3D_View"],
                 "pattern": {
                     "regexp": "^(.*):(\\d+):(\\d+) - error TS\\d+: (.*)$",
                     "file": 1,
@@ -82,7 +82,7 @@
             "command": "npx",
             "args": ["esbuild", "ts/Run.ts", "--bundle", "--outfile=./build/imagine3d.bundle.js", "--watch"],
             "options": {
-                "cwd": "${workspaceFolder}/Code/Imagine3DView"
+                "cwd": "${workspaceFolder}/Code/I3D_View"
             },
             "isBackground": true,
             "problemMatcher": []
@@ -93,7 +93,7 @@
             "command": "npx",
             "args": ["rimraf", "build/js"],
             "options": {
-                "cwd": "${workspaceFolder}/Code/Imagine3DView"
+                "cwd": "${workspaceFolder}/Code/I3D_View"
             },
             "problemMatcher": []
         },

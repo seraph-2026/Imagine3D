@@ -1,9 +1,9 @@
-Imagine3DView
+I3D_View
     var
-        htmlFile = 'Code/Imagine3DView/html/Imagine3DView.html'
-        cssFiles = list('Code/Imagine3DView/css/Imagine3DView.css')
+        htmlFile = 'Code/I3D_View/html/I3D_View.html'
+        cssFiles = list('Code/I3D_View/css/I3D_View.css')
         jsFiles = list(
-            'Code/Imagine3DView/build/imagine3d.bundle.js'
+            'Code/I3D_View/build/imagine3d.bundle.js'
         )
         I3D_ClientState/clientState
         I3D_ClientState/gameState
@@ -20,7 +20,7 @@ Imagine3DView
         src.controlId = controlId
 
         if(!windowId || !controlId)
-            throw EXCEPTION("Failed to create Imagine3DView. Both window and control id are required to run Imagine3DView. Recieved: [windowId].[controlId] (window.controlId)")
+            throw EXCEPTION("Failed to create I3D_View. Both window and control id are required to run I3D_View. Recieved: [windowId].[controlId] (window.controlId)")
             return
 
         src.clientState = new(windowId, controlId, src.owner)

@@ -27342,10 +27342,10 @@ void main() {
     }
   });
 
-  // ts/I3D/BrowserView/BrowserView.ts
+  // ts/I3D/State/StateManager.ts
   var StateManager;
-  var init_BrowserView = __esm({
-    "ts/I3D/BrowserView/BrowserView.ts"() {
+  var init_StateManager = __esm({
+    "ts/I3D/State/StateManager.ts"() {
       "use strict";
       init_I3D();
       StateManager = class {
@@ -27470,7 +27470,7 @@ void main() {
       "use strict";
       init_Renderer();
       init_Map();
-      init_BrowserView();
+      init_StateManager();
       init_TickLoop();
       I3DManager = class {
         constructor() {
@@ -27499,7 +27499,7 @@ void main() {
     }
   });
 
-  // ts/I3D/BrowserView/KeyHandling/Keys.ts
+  // ts/I3D/Controls/Keys.ts
   function initializeKeyEvents() {
     document.addEventListener("keydown", (keyEvent) => {
       if (keyEvent.repeat) return;
@@ -27521,7 +27521,7 @@ void main() {
     });
   }
   var init_Keys = __esm({
-    "ts/I3D/BrowserView/KeyHandling/Keys.ts"() {
+    "ts/I3D/Controls/Keys.ts"() {
       "use strict";
     }
   });
@@ -27531,7 +27531,7 @@ void main() {
     "ts/Run.ts"() {
       init_I3D();
       init_Keys();
-      console.log("Imagine3DView");
+      console.log("I3D_View");
       console.log("- Successfully started");
       var mapLoadInterval = setInterval(() => {
         if (manager.map.isLoaded) {

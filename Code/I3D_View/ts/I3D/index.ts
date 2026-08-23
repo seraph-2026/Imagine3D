@@ -3,9 +3,9 @@ export { CameraManager } from "./Renderer/CameraManager";
 export { Map } from "./Game/Map";
 export { Tile } from "./Game/Tile";
 
-export { MapJson } from "./Transport/MapJson";
-export { ResourceJson } from "./Transport/ResourceJson";
-export { TileJson } from "./Transport/TileJson";
+export { MapJson } from "./State/JsonTypes/MapJson";
+export { ResourceJson } from "./State/JsonTypes/ResourceJson";
+export { TileJson } from "./State/JsonTypes/TileJson";
 
 export { AngleMapper } from "./Utilities/AngleMapper";
 export { CoordinateMapper } from "./Utilities/CoordinateMapper";

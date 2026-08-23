@@ -1,4 +1,4 @@
-import { StateManager } from "../BrowserView/BrowserView";
+import { StateManager } from "../State/StateManager";
 
 export class TickLoop {
     stateManager: StateManager;

@@ -1,10 +1,10 @@
 import * as THREE from "three";
-import { MapJson } from "../Transport/MapJson";
-import { TileJson } from "../Transport/TileJson";
-import { ResourceJson } from "../Transport/ResourceJson";
+import { MapJson } from "../State/JsonTypes/MapJson";
+import { TileJson } from "../State/JsonTypes/TileJson";
+import { ResourceJson } from "../State/JsonTypes/ResourceJson";
 import { CoordinateMapper } from "../Utilities/CoordinateMapper";
 import { Tile } from "./Tile";
-import { StateManager } from "../BrowserView/BrowserView";
+import { StateManager } from "../State/StateManager";
 
 export class Map {
     icon_size_x!: number;

@@ -1,6 +1,6 @@
 import { Renderer } from "./Renderer/Renderer";
 import { Map } from "./Game/Map";
-import { StateManager } from "./BrowserView/BrowserView";
+import { StateManager } from "./State/StateManager";
 import { TickLoop } from "./Network/TickLoop";
 
 export class I3DManager {

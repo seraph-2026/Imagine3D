@@ -18,7 +18,7 @@
 #include "Code\Engine\Imagine3D.dm"
 #include "Code\Engine\Mob.dm"
 #include "Code\Engine\World.dm"
-#include "Code\Engine\BrowserView\Imagine3DView.dm"
+#include "Code\Engine\BrowserView\I3D_View.dm"
 #include "Code\Engine\Events\EventHandling.dm"
 #include "Code\Engine\GlobalSettings\I3D_GlobalSettings.dm"
 #include "Code\Engine\GlobalSettings\Imagine3D.dm"

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { TileJson } from "../Transport/TileJson";
+import { TileJson } from "../State/JsonTypes/TileJson";
 
 const tileSideGeometry = new THREE.PlaneGeometry(1, 1);
 

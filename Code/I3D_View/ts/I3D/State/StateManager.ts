@@ -1,5 +1,5 @@
 import { manager } from "..";
-import { ClientStateJson } from "../Transport/ClientStateJson";
+import { ClientStateJson } from "./JsonTypes/ClientStateJson";
 
 export class StateManager {
     gameState: {
@@ -91,3 +91,14 @@ export class StateManager {
         BYOND.command(`captureEvent ${eventToSend}`);
     }
 }
+// // Don't send updates if nothing changed
+// if (newState != originalState) {
+//     //console.log("- Synchronizing with DM, sending current state back", name);
+
+//     const stateToSend = encodeURIComponent(JSON.stringify(this.state));
+
+//     BYOND.topic({
+//         viewEvent: "reflectState",
+//         value: stateToSend,
+//     });
+// }
