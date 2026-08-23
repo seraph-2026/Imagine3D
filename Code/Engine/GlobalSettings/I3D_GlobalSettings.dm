@@ -1,6 +1,7 @@
 
+var/I3D_StateComponent/I3D_GlobalSettings/global_settings
 
-I3D_GlobalSettings
+I3D_StateComponent/I3D_GlobalSettings
     var
         j_mouseLookEnabled = FALSE
 

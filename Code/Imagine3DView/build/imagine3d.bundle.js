@@ -14788,13 +14788,13 @@
           let height = 2 * top;
           let width = this.aspect * height;
           let left = -0.5 * width;
-          const view2 = this.view;
+          const view = this.view;
           if (this.view !== null && this.view.enabled) {
-            const fullWidth = view2.fullWidth, fullHeight = view2.fullHeight;
-            left += view2.offsetX * width / fullWidth;
-            top -= view2.offsetY * height / fullHeight;
-            width *= view2.width / fullWidth;
-            height *= view2.height / fullHeight;
+            const fullWidth = view.fullWidth, fullHeight = view.fullHeight;
+            left += view.offsetX * width / fullWidth;
+            top -= view.offsetY * height / fullHeight;
+            width *= view.width / fullWidth;
+            height *= view.height / fullHeight;
           }
           const skew = this.filmOffset;
           if (skew !== 0) left += near * skew / this.getFilmWidth();
@@ -24821,12 +24821,12 @@ void main() {
                 cameraXRNeedsUpdate = true;
               }
               for (let i = 0; i < views.length; i++) {
-                const view2 = views[i];
+                const view = views[i];
                 let viewport = null;
                 if (glBaseLayer !== null) {
-                  viewport = glBaseLayer.getViewport(view2);
+                  viewport = glBaseLayer.getViewport(view);
                 } else {
-                  const glSubImage = glBinding.getViewSubImage(glProjLayer, view2);
+                  const glSubImage = glBinding.getViewSubImage(glProjLayer, view);
                   viewport = glSubImage.viewport;
                   if (i === 0) {
                     renderer.setRenderTargetTextures(
@@ -24844,9 +24844,9 @@ void main() {
                   camera.viewport = new Vector4();
                   cameras[i] = camera;
                 }
-                camera.matrix.fromArray(view2.transform.matrix);
+                camera.matrix.fromArray(view.transform.matrix);
                 camera.matrix.decompose(camera.position, camera.quaternion, camera.scale);
-                camera.projectionMatrix.fromArray(view2.projectionMatrix);
+                camera.projectionMatrix.fromArray(view.projectionMatrix);
                 camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert();
                 camera.viewport.set(viewport.x, viewport.y, viewport.width, viewport.height);
                 if (i === 0) {
@@ -27116,8 +27116,8 @@ void main() {
           this.mouseUpdateInterval = 1e3 / 60;
         }
         setCameraPosition() {
-          if (window.view.state.pixelLoc) {
-            const playerPixelLoc = window.view.state.pixelLoc;
+          if (window.view.gameState.pixelLoc) {
+            const playerPixelLoc = window.view.gameState.pixelLoc;
             const byondCoord = CoordinateMapper.byondPixelToCoordinates(
               playerPixelLoc.x,
               playerPixelLoc.y,
@@ -27138,7 +27138,7 @@ void main() {
             this.camera.rotation.y = this.yaw;
             this.camera.rotation.x = this.pitch;
           } else {
-            const angle = window.view.state.angle.angle;
+            const angle = window.view.gameState.angle.angle;
             this.camera.rotation.y = AngleMapper.byondAngleToThree(angle);
           }
         }
@@ -27157,9 +27157,8 @@ void main() {
               const now = performance.now();
               if (now - this.lastMouseUpdate >= this.mouseUpdateInterval) {
                 this.lastMouseUpdate = now;
-                const angle = window.view.state.angle;
+                const angle = window.view.gameState.angle;
                 angle.angle = AngleMapper.threeAngleToByond(this.yaw);
-                window.view.setState("angle", JSON.stringify(angle));
               }
             }
           });
@@ -27209,50 +27208,6 @@ void main() {
           resize();
         }
       };
-    }
-  });
-
-  // ts/BrowserView/BrowserView.ts
-  var BrowserView, view;
-  var init_BrowserView = __esm({
-    "ts/BrowserView/BrowserView.ts"() {
-      "use strict";
-      BrowserView = class {
-        constructor() {
-          this.state = {};
-          console.log("BrowserView");
-          console.log("- Successfully created");
-          console.log("- Listening for state changes");
-        }
-        setState(name, value) {
-          const originalState = JSON.stringify(this.state);
-          try {
-            this.state[name] = JSON.parse(decodeURIComponent(value));
-          } catch (exception) {
-            console.error(exception);
-            return;
-          }
-          const newState = JSON.stringify(this.state);
-          if (newState != originalState) {
-            const stateToSend = encodeURIComponent(JSON.stringify(this.state));
-            BYOND.topic({
-              viewEvent: "reflectState",
-              value: stateToSend
-            });
-          }
-        }
-        sendEvent(eventName) {
-          const event = {
-            browserViewId: this.state.browserViewId,
-            name: eventName
-          };
-          const eventToSend = JSON.stringify(event);
-          console.log(eventName, eventToSend);
-          BYOND.command(`captureEvent ${eventToSend}`);
-        }
-      };
-      view = new BrowserView();
-      window.view = view;
     }
   });
 
@@ -27312,24 +27267,24 @@ void main() {
     "ts/I3D/Game/Map.ts"() {
       "use strict";
       init_three_module();
-      init_BrowserView();
       init_CoordinateMapper();
       init_Tile();
       Map2 = class {
-        constructor() {
+        constructor(browserView) {
           this.isLoaded = false;
+          this.browserView = browserView;
           console.log("Map");
           console.log("- Succesfully constructured");
-          console.log("- Awaiting to recieve JsonMap from BYOND (using view.state)");
+          console.log("- Awaiting to recieve JsonMap from BYOND (using view.gameState)");
           this.waitForJsonMapThenLoad();
         }
         waitForJsonMapThenLoad() {
-          if (!view.state.map) {
+          if (!this.browserView.gameState.map) {
             setTimeout(() => this.waitForJsonMapThenLoad(), 10);
             return;
           }
           console.log("- Recieved JsonMap. Initializing Map");
-          const mapJson = view.state.map;
+          const mapJson = this.browserView.gameState.map;
           this.tileIdMap = mapJson.tileIdMap;
           this.maxX = mapJson.tileIdMap.length;
           this.maxY = mapJson.tileIdMap[0].length;
@@ -27387,6 +27342,117 @@ void main() {
     }
   });
 
+  // ts/BrowserView/BrowserView.ts
+  var BrowserView;
+  var init_BrowserView = __esm({
+    "ts/BrowserView/BrowserView.ts"() {
+      "use strict";
+      init_I3D();
+      BrowserView = class {
+        constructor() {
+          this.gameState = {};
+          this.clientState = {
+            browser: {
+              windowId: null,
+              controlId: null,
+              isReady: null
+            },
+            tickLag: null,
+            hasChanged: 0
+          };
+          console.log("BrowserView");
+          console.log("- Successfully created");
+          console.log("- Listening for state changes");
+        }
+        // Name is not used but is required by DM
+        setGameState(_name, value) {
+          console.log("- Setting game state");
+          try {
+            this.gameState = JSON.parse(decodeURIComponent(value));
+          } catch (exception) {
+            console.error(exception);
+            return;
+          }
+        }
+        // Name is not used but is required by DM
+        initializeClientState(_name, value) {
+          console.log("- Setting client state");
+          try {
+            this.clientState = JSON.parse(decodeURIComponent(value));
+            this.clientState.browser.isReady = 1;
+            this.clientState.hasChanged = 1;
+            if (this.clientState.tickLag) {
+              manager.tickLoop.start(this.clientState.tickLag);
+            } else {
+              throw Error(
+                "Was unable to start the network tick process because no tickLag was defined in this.clientState.tickLag."
+              );
+            }
+          } catch (exception) {
+            console.error(exception);
+            return;
+          }
+        }
+        // Name is not used but is required by DM
+        reflectClientState() {
+          console.log("- Reflecting client state");
+          try {
+            const clientStateToSend = encodeURIComponent(JSON.stringify(this.clientState));
+            BYOND.command(`setClientState ${clientStateToSend}`);
+          } catch (exception) {
+            console.error(exception);
+            return;
+          }
+        }
+        sendEvent(eventName) {
+          const event = {
+            browserViewId: this.clientState.browser.windowId,
+            name: eventName
+          };
+          const eventToSend = JSON.stringify(event);
+          console.log(eventName, eventToSend);
+          BYOND.command(`captureEvent ${eventToSend}`);
+        }
+      };
+    }
+  });
+
+  // ts/I3D/Network/TickLoop.ts
+  var TickLoop;
+  var init_TickLoop = __esm({
+    "ts/I3D/Network/TickLoop.ts"() {
+      "use strict";
+      init_I3DManager();
+      TickLoop = class {
+        clientTick() {
+          if (manager.browserView.clientState.hasChanged) {
+            manager.browserView.clientState.hasChanged = 0;
+            manager.browserView.reflectClientState();
+          }
+        }
+        start(tickLag) {
+          if (!this.intervalId) {
+            this.tickLag = tickLag;
+            const timeToWaitMs = this.tickLag * 100;
+            this.intervalId = setInterval(() => {
+              this.clientTick();
+            }, timeToWaitMs);
+          } else {
+            throw Error("Tick interval already in progress");
+          }
+        }
+        stop() {
+          if (this.intervalId) {
+            clearInterval(this.intervalId);
+            this.intervalId = void 0;
+          } else {
+            throw Error("No tick interval to stop");
+          }
+        }
+      };
+    }
+  });
+
   // ts/I3D/I3DManager.ts
   var I3DManager, manager;
   var init_I3DManager = __esm({
@@ -27394,10 +27460,14 @@ void main() {
       "use strict";
       init_Renderer();
       init_Map();
+      init_BrowserView();
+      init_TickLoop();
       I3DManager = class {
         constructor() {
+          this.browserView = new BrowserView();
           this.renderer = new Renderer();
-          this.map = new Map2();
+          this.map = new Map2(this.browserView);
+          this.tickLoop = new TickLoop();
         }
       };
       manager = new I3DManager();
@@ -27424,7 +27494,7 @@ void main() {
     document.addEventListener("keydown", (keyEvent) => {
       if (keyEvent.repeat) return;
       const event = {
-        browserViewId: view.state.browserViewId,
+        browserViewId: 0,
         keyCode: keyEvent.code
       };
       const eventToSend = JSON.stringify(event);
@@ -27433,7 +27503,7 @@ void main() {
     document.addEventListener("keyup", (keyEvent) => {
       if (keyEvent.repeat) return;
       const event = {
-        browserViewId: view.state.browserViewId,
+        browserViewId: 0,
         keyCode: keyEvent.code
       };
       const eventToSend = JSON.stringify(event);
@@ -27443,7 +27513,6 @@ void main() {
   var init_KeyDown = __esm({
     "ts/BrowserView/KeyHandling/KeyDown.ts"() {
       "use strict";
-      init_BrowserView();
     }
   });
 
@@ -27461,8 +27530,7 @@ void main() {
           manager.renderer.animate();
           manager.renderer.requestPointerLock();
           manager.renderer.resizeToFitScreen();
-          console.log(window.view.state);
-          if (window.view?.state?.settings?.mouseLookEnabled === 1) {
+          if (window.view?.gameState?.settings?.mouseLookEnabled === 1) {
             manager.renderer.cameraManager.enableMouseLook();
           }
           initializeKeyEvents();

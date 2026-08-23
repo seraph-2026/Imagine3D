@@ -1,7 +1,20 @@
+import { manager } from "../I3D";
+import { ClientStateJson } from "../I3D/Transport/ClientStateJson";
+
 export class BrowserView {
-    state: {
+    gameState: {
         [key: string]: any;
     } = {};
+
+    clientState: ClientStateJson = {
+        browser: {
+            windowId: null,
+            controlId: null,
+            isReady: null,
+        },
+        tickLag: null,
+        hasChanged: 0,
+    };
 
     constructor() {
         console.log("BrowserView");
@@ -9,39 +22,53 @@ export class BrowserView {
         console.log("- Listening for state changes");
     }
 
-    setState(name: string, value: string) {
-        // console.log("BrowserView (setState)");
-        // console.log("State recieved [name]", name);
-        // console.log("State recieved [value]", JSON.stringify(value));
+    // Name is not used but is required by DM
+    setGameState(_name: string, value: string): void {
+        console.log("- Setting game state");
 
-        const originalState = JSON.stringify(this.state);
         try {
-            this.state[name] = JSON.parse(decodeURIComponent(value));
+            this.gameState = JSON.parse(decodeURIComponent(value));
         } catch (exception) {
             console.error(exception);
             return;
         }
-
-        const newState = JSON.stringify(this.state);
-
-        // Don't send updates if nothing changed
-        if (newState != originalState) {
-            //console.log("- Synchronizing with DM, sending current state back", name);
-
-            const stateToSend = encodeURIComponent(JSON.stringify(this.state));
-
-            BYOND.topic({
-                viewEvent: "reflectState",
-                value: stateToSend,
-            });
-        }
-
-        // console.log("State update completed", name);
     }
 
-    sendEvent(eventName: string) {
+    // Name is not used but is required by DM
+    initializeClientState(_name: string, value: string): void {
+        console.log("- Setting client state");
+        try {
+            this.clientState = JSON.parse(decodeURIComponent(value));
+            this.clientState.browser.isReady = 1;
+            this.clientState.hasChanged = 1;
+            if (this.clientState.tickLag) {
+                manager.tickLoop.start(this.clientState.tickLag);
+            } else {
+                throw Error(
+                    "Was unable to start the network tick process because no tickLag was defined in this.clientState.tickLag.",
+                );
+            }
+        } catch (exception) {
+            console.error(exception);
+            return;
+        }
+    }
+
+    // Name is not used but is required by DM
+    reflectClientState(): void {
+        console.log("- Reflecting client state");
+        try {
+            const clientStateToSend = encodeURIComponent(JSON.stringify(this.clientState));
+            BYOND.command(`setClientState ${clientStateToSend}`);
+        } catch (exception) {
+            console.error(exception);
+            return;
+        }
+    }
+
+    sendEvent(eventName: string): void {
         const event = {
-            browserViewId: this.state.browserViewId,
+            browserViewId: this.clientState.browser.windowId,
             name: eventName,
         };
 
@@ -52,8 +79,3 @@ export class BrowserView {
         BYOND.command(`captureEvent ${eventToSend}`);
     }
 }
-
-export const view = new BrowserView();
-
-//
-window.view = view;

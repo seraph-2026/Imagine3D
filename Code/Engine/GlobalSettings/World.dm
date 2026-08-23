@@ -1,4 +1,4 @@
-var/I3D_GlobalSettings/global_settings
+
 
 world
     New()

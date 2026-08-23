@@ -17,16 +17,11 @@ window "map-window"
 		size = 640x480
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		background-color = none
 		is-visible = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "2D Minimap"
 		statusbar = false
 		can-minimize = false
-		outer-size = 656x519
-		outer-pos = 291,0
-		inner-pos = 8,31
-		screen-size = 1920x1032
 	elem "map"
 		type = MAP
 		pos = 0,0
@@ -68,8 +63,6 @@ window "window"
 		size = 496x655
 		anchor1 = 48,0
 		anchor2 = 100,100
-		is-visible = false
 		is-default = true
-		border = sunken
 		saved-params = "max-lines"
 

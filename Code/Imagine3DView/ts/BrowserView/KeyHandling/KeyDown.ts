@@ -1,5 +1,3 @@
-import { view } from "../BrowserView";
-
 export function initializeKeyEvents(): void {
     // Non repeatable so we don't spam BYOND's command system
 
@@ -7,7 +5,7 @@ export function initializeKeyEvents(): void {
         if (keyEvent.repeat) return;
 
         const event = {
-            browserViewId: view.state.browserViewId,
+            browserViewId: 0,
             keyCode: keyEvent.code,
         };
 
@@ -20,7 +18,7 @@ export function initializeKeyEvents(): void {
         if (keyEvent.repeat) return;
 
         const event = {
-            browserViewId: view.state.browserViewId,
+            browserViewId: 0,
             keyCode: keyEvent.code,
         };
 

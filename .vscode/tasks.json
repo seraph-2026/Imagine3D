@@ -59,7 +59,22 @@
                 "cwd": "${workspaceFolder}/Code/Imagine3DView"
             },
             "isBackground": true,
-            "problemMatcher": []
+            "problemMatcher": {
+                "owner": "typescript",
+                "applyTo": "closedDocuments",
+                "fileLocation": ["relative", "${workspaceFolder}/Code/Imagine3DView"],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+) - error TS\\d+: (.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "message": 4
+                },
+                "background": {
+                    "beginsPattern": "^\\[.*\\] Starting compilation in watch mode\\.\\.\\.$",
+                    "endsPattern": "^\\[.*\\] Found \\d+ errors?\\. Watching for file changes\\.$"
+                }
+            }
         },
         {
             "label": "Imagine3D - Bundle",

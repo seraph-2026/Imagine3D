@@ -1,7 +1,7 @@
 
-var/I3D_Map/global_map
+var/I3D_StateComponent/I3D_Map/global_map
 
-I3D_Map
+I3D_StateComponent/I3D_Map
     var
         j_icon_size_x
         j_icon_size_y
@@ -31,6 +31,7 @@ I3D_Map
             
             // Inform all the clients that the map has updated
             world.informClientsOfMapUpdate()
+            src.hasChanged = TRUE // Send in next state update
         
         setIconSize()
             if(isnum(world.icon_size))

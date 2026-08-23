@@ -25,8 +25,8 @@ export class CameraManager {
 
     setCameraPosition(): void {
         // Only run if we have the position data
-        if (window.view.state.pixelLoc) {
-            const playerPixelLoc = window.view.state.pixelLoc;
+        if (window.view.gameState.pixelLoc) {
+            const playerPixelLoc = window.view.gameState.pixelLoc;
 
             const byondCoord = CoordinateMapper.byondPixelToCoordinates(
                 playerPixelLoc.x,
@@ -52,7 +52,7 @@ export class CameraManager {
             this.camera.rotation.y = this.yaw;
             this.camera.rotation.x = this.pitch;
         } else {
-            const angle = window.view.state.angle.angle; // Degrees
+            const angle = window.view.gameState.angle.angle; // Degrees
             // Otherwise, use the rotation angle we're given by BYOND
             this.camera.rotation.y = AngleMapper.byondAngleToThree(angle);
         }
@@ -83,9 +83,9 @@ export class CameraManager {
                     this.lastMouseUpdate = now;
 
                     // Send yaw to DM (it doesn't have pitch)
-                    const angle = window.view.state.angle;
+                    const angle = window.view.gameState.angle;
                     angle.angle = AngleMapper.threeAngleToByond(this.yaw);
-                    window.view.setState("angle", JSON.stringify(angle));
+                    //window.view.setGameState("angle", JSON.stringify(angle));
                 }
             }
         });

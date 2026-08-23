@@ -17,9 +17,7 @@ const mapLoadInterval = setInterval(() => {
         I3D.manager.renderer.requestPointerLock();
         I3D.manager.renderer.resizeToFitScreen();
 
-        console.log(window.view.state);
-
-        if (window.view?.state?.settings?.mouseLookEnabled === 1) {
+        if (window.view?.gameState?.settings?.mouseLookEnabled === 1) {
             I3D.manager.renderer.cameraManager.enableMouseLook();
         }
 
