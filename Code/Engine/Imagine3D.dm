@@ -11,16 +11,10 @@ Imagine3D
         registerTicks() // Overriden by tick definitions
 
 mob
-    var/I3D_View/i3d_view
-
     proc
         i3d_init(windowId, browserControlId)
             // Build them a browser
             src.i3d_view = new/I3D_View(windowId, browserControlId, src)
-
-            // Inform browser of player
-            i3d_updatePixelLoc()
-            i3d_updateAngle()
 
             // Update using the latest global settings
             i3d_updateGlobalSettings()
@@ -28,8 +22,10 @@ mob
             // Draw 3D map in the browser
             src.client.drawLatestMap()
 
-            // Start running ticks which are used by the components of this library
-            // First one at the time of this comment was movement tick
+            /**
+                Start running ticks which are used by the components of this library
+                First one at the time of this comment was movement tick
+            **/
             Imagine3D.registerTicks()
         
         i3d_enableWebDevTools()

@@ -1,3 +1,6 @@
+mob
+    var/I3D_View/i3d_view
+
 I3D_View
     var
         htmlFile = 'Code/I3D_View/html/I3D_View.html'
