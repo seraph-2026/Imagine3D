@@ -57,11 +57,3 @@ Imagine3DView
 
         setState()
             //world << "setState is stubbed"
-
-        keyDown(htmlKeyCode)
-            if(Imagine3D.captureImpulses)
-                keyImpulses += htmlKeyCode
-
-        keyUp(htmlKeyCode)
-            if(Imagine3D.captureImpulses)
-                keyImpulses += htmlKeyCode + "+UP" // +UP is a DM standard

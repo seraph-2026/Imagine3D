@@ -1,5 +1,5 @@
 import { BrowserView } from "../BrowserView/BrowserView";
-import { I3DManager } from "../I3D";
+import { I3DManager } from "..";
 
 export {};
 

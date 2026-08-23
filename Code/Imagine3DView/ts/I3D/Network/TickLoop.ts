@@ -1,4 +1,4 @@
-import { BrowserView } from "../../BrowserView/BrowserView";
+import { BrowserView } from "../BrowserView/BrowserView";
 
 export class TickLoop {
     browserView: BrowserView;

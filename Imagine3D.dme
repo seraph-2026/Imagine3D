@@ -14,14 +14,12 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "Code\BrowserView\BrowserView.dm"
-#include "Code\BrowserView\ClientTopic.dm"
-#include "Code\BrowserView\Mob.dm"
-#include "Code\BrowserView\ViewManager.dm"
 #include "Code\Engine\Client.dm"
 #include "Code\Engine\Imagine3D.dm"
 #include "Code\Engine\Mob.dm"
 #include "Code\Engine\World.dm"
+#include "Code\Engine\BrowserView\Imagine3DView.dm"
+#include "Code\Engine\Events\EventHandling.dm"
 #include "Code\Engine\GlobalSettings\I3D_GlobalSettings.dm"
 #include "Code\Engine\GlobalSettings\Imagine3D.dm"
 #include "Code\Engine\GlobalSettings\World.dm"
@@ -36,8 +34,6 @@
 #include "Code\Engine\Player\I3D_Player.dm"
 #include "Code\Engine\ServerTick\TickRegistration.dm"
 #include "Code\Engine\State\GameState\I3D_Game_State.dm"
-#include "Code\Imagine3DView\dm\EventHandling.dm"
-#include "Code\Imagine3DView\dm\Imagine3DView.dm"
 #include "Code\Engine\State\ClientState\I3D_BrowserState.dm"
 #include "Code\Engine\State\ClientState\I3D_ClientState.dm"
 #include "Code\Engine\State\ClientState\I3D_StateComponent.dm"

@@ -27342,10 +27342,10 @@ void main() {
     }
   });
 
-  // ts/BrowserView/BrowserView.ts
+  // ts/I3D/BrowserView/BrowserView.ts
   var BrowserView;
   var init_BrowserView = __esm({
-    "ts/BrowserView/BrowserView.ts"() {
+    "ts/I3D/BrowserView/BrowserView.ts"() {
       "use strict";
       init_I3D();
       BrowserView = class {
@@ -27499,7 +27499,7 @@ void main() {
     }
   });
 
-  // ts/BrowserView/KeyHandling/KeyDown.ts
+  // ts/I3D/BrowserView/KeyHandling/Keys.ts
   function initializeKeyEvents() {
     document.addEventListener("keydown", (keyEvent) => {
       if (keyEvent.repeat) return;
@@ -27508,7 +27508,7 @@ void main() {
         keyCode: keyEvent.code
       };
       const eventToSend = JSON.stringify(event);
-      BYOND.command(`captureKeyDown ${eventToSend}`);
+      BYOND.command(`keyDown ${eventToSend}`);
     });
     document.addEventListener("keyup", (keyEvent) => {
       if (keyEvent.repeat) return;
@@ -27517,11 +27517,11 @@ void main() {
         keyCode: keyEvent.code
       };
       const eventToSend = JSON.stringify(event);
-      BYOND.command(`captureKeyUp ${eventToSend}`);
+      BYOND.command(`keyUp ${eventToSend}`);
     });
   }
-  var init_KeyDown = __esm({
-    "ts/BrowserView/KeyHandling/KeyDown.ts"() {
+  var init_Keys = __esm({
+    "ts/I3D/BrowserView/KeyHandling/Keys.ts"() {
       "use strict";
     }
   });
@@ -27530,7 +27530,7 @@ void main() {
   var require_Run = __commonJS({
     "ts/Run.ts"() {
       init_I3D();
-      init_KeyDown();
+      init_Keys();
       console.log("Imagine3DView");
       console.log("- Successfully started");
       var mapLoadInterval = setInterval(() => {

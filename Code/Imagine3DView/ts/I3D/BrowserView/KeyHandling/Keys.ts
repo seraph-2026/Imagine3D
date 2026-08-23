@@ -11,7 +11,7 @@ export function initializeKeyEvents(): void {
 
         const eventToSend = JSON.stringify(event);
 
-        BYOND.command(`captureKeyDown ${eventToSend}`);
+        BYOND.command(`keyDown ${eventToSend}`);
     });
 
     document.addEventListener("keyup", (keyEvent) => {
@@ -24,6 +24,6 @@ export function initializeKeyEvents(): void {
 
         const eventToSend = JSON.stringify(event);
 
-        BYOND.command(`captureKeyUp ${eventToSend}`);
+        BYOND.command(`keyUp ${eventToSend}`);
     });
 }

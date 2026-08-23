@@ -1,6 +1,6 @@
 import { Renderer } from "./Renderer/Renderer";
 import { Map } from "./Game/Map";
-import { BrowserView } from "../BrowserView/BrowserView";
+import { BrowserView } from "./BrowserView/BrowserView";
 import { TickLoop } from "./Network/TickLoop";
 
 export class I3DManager {

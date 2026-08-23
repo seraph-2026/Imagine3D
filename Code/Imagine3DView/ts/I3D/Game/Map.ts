@@ -4,7 +4,7 @@ import { TileJson } from "../Transport/TileJson";
 import { ResourceJson } from "../Transport/ResourceJson";
 import { CoordinateMapper } from "../Utilities/CoordinateMapper";
 import { Tile } from "./Tile";
-import { BrowserView } from "../../BrowserView/BrowserView";
+import { BrowserView } from "../BrowserView/BrowserView";
 
 export class Map {
     icon_size_x!: number;

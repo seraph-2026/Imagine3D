@@ -1,5 +1,5 @@
 import * as I3D from "./I3D";
-import { initializeKeyEvents } from "./BrowserView/KeyHandling/KeyDown";
+import { initializeKeyEvents } from "./I3D/BrowserView/KeyHandling/Keys";
 
 console.log("Imagine3DView");
 console.log("- Successfully started");

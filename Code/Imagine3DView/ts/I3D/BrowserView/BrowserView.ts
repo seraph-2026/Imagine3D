@@ -1,5 +1,5 @@
-import { manager } from "../I3D";
-import { ClientStateJson } from "../I3D/Transport/ClientStateJson";
+import { manager } from "..";
+import { ClientStateJson } from "../Transport/ClientStateJson";
 
 export class BrowserView {
     gameState: {
