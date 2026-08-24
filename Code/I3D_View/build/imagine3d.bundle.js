@@ -27104,9 +27104,10 @@ void main() {
       init_CoordinateMapper();
       init_AngleMapper();
       CameraManager = class {
-        constructor(camera) {
+        constructor(camera, stateManger) {
           console.log("CameraManager");
           this.camera = camera;
+          this.stateManager = stateManger;
           this.mouseLook = false;
           this.yaw = 0;
           this.pitch = 0;
@@ -27116,8 +27117,8 @@ void main() {
           this.mouseUpdateInterval = 1e3 / 60;
         }
         setCameraPosition() {
-          if (window.view.gameState.pixelLoc) {
-            const playerPixelLoc = window.view.gameState.pixelLoc;
+          if (this.stateManager.gameState?.player?.pixelLoc) {
+            const playerPixelLoc = this.stateManager.gameState.player.pixelLoc;
             const byondCoord = CoordinateMapper.byondPixelToCoordinates(
               playerPixelLoc.x,
               playerPixelLoc.y,
@@ -27134,12 +27135,14 @@ void main() {
           }
         }
         setCameraAngle() {
-          if (this.mouseLook) {
-            this.camera.rotation.y = this.yaw;
-            this.camera.rotation.x = this.pitch;
-          } else {
-            const angle = window.view.gameState.angle.angle;
-            this.camera.rotation.y = AngleMapper.byondAngleToThree(angle);
+          if (this.stateManager.gameState?.player) {
+            if (this.mouseLook) {
+              this.camera.rotation.y = this.yaw;
+              this.camera.rotation.x = this.pitch;
+            } else {
+              const angle = this.stateManager.gameState?.player?.rotation.angle;
+              this.camera.rotation.y = AngleMapper.byondAngleToThree(angle);
+            }
           }
         }
         enableMouseLook() {
@@ -27147,7 +27150,7 @@ void main() {
           this.mouseLook = true;
           const canvas = window.i3d.renderer.threeRenderer.domElement;
           document.addEventListener("mousemove", (event) => {
-            if (this.mouseLook && document.pointerLockElement === canvas) {
+            if (this.mouseLook && document.pointerLockElement === canvas && this.stateManager.gameState?.player) {
               let newYaw = this.yaw + event.movementX * this.mouseSensitivity;
               let newPitch = this.pitch - event.movementY * this.mouseSensitivity;
               const maxPitch = Math.PI / 2;
@@ -27157,8 +27160,6 @@ void main() {
               const now = performance.now();
               if (now - this.lastMouseUpdate >= this.mouseUpdateInterval) {
                 this.lastMouseUpdate = now;
-                const angle = window.view.gameState.angle;
-                angle.angle = AngleMapper.threeAngleToByond(this.yaw);
               }
             }
           });
@@ -27175,16 +27176,17 @@ void main() {
       init_three_module();
       init_CameraManager();
       Renderer = class {
-        constructor() {
+        constructor(stateManager) {
           console.log("Renderer");
           this.scene = new Scene();
+          this.stateManager = stateManager;
           const camera = new PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1e3);
-          this.cameraManager = new CameraManager(camera);
+          this.cameraManager = new CameraManager(camera, stateManager);
           this.threeRenderer = new WebGLRenderer();
           this.threeRenderer.setSize(window.innerWidth, window.innerHeight);
           this.threeRenderer.domElement.style.transform = "scaleX(-1)";
           document.body.appendChild(this.threeRenderer.domElement);
-          console.log("- Succesfully const2ructured");
+          console.log("- Succesfully constructured");
           console.log("- Awaiting signal to animate()");
         }
         animate() {
@@ -27275,11 +27277,11 @@ void main() {
           this.stateManager = stateManager;
           console.log("Map");
           console.log("- Succesfully constructured");
-          console.log("- Awaiting to recieve JsonMap from BYOND (using view.gameState)");
+          console.log("- Awaiting to recieve JsonMap from BYOND in game state");
           this.waitForJsonMapThenLoad();
         }
         waitForJsonMapThenLoad() {
-          if (!this.stateManager.gameState.map) {
+          if (!this.stateManager.gameState?.map) {
             setTimeout(() => this.waitForJsonMapThenLoad(), 10);
             return;
           }
@@ -27350,7 +27352,11 @@ void main() {
       init_I3D();
       StateManager = class {
         constructor() {
-          this.gameState = {};
+          this.gameState = {
+            player: null,
+            map: null,
+            globalSettings: null
+          };
           this.clientState = {
             browser: {
               windowId: null,
@@ -27366,18 +27372,8 @@ void main() {
           console.log("- Listening for state changes");
         }
         // Name is not used but is required by DM
-        setGameState(_name, value) {
-          console.log("- Setting game state");
-          try {
-            this.gameState = JSON.parse(decodeURIComponent(value));
-          } catch (exception) {
-            console.error(exception);
-            return;
-          }
-        }
-        // Name is not used but is required by DM
-        initializeClientState(_name, value) {
-          if (!this.initialized) {
+        initializeClientState(name, value) {
+          if (!this.initialized && name === "clientState") {
             try {
               console.log("- Initailizing client state");
               this.clientState = JSON.parse(decodeURIComponent(value));
@@ -27406,10 +27402,27 @@ void main() {
           try {
             const clientStateToSend = encodeURIComponent(JSON.stringify(this.clientState));
             console.log("- Sending client state: ", JSON.stringify(this.clientState));
-            BYOND.command(`setClientState ${clientStateToSend}`);
+            BYOND.topic({
+              viewEvent: "setClientState",
+              value: clientStateToSend
+            });
           } catch (exception) {
             console.error(exception);
             return;
+          }
+        }
+        updateMapState(name, value) {
+          if (name === "MapState") {
+            console.log("- Updating game state");
+            try {
+              console.log("- Initailizing game state");
+              this.gameState.map = JSON.parse(decodeURIComponent(value));
+            } catch (exception) {
+              console.error(exception);
+              return;
+            }
+            console.log("- Game state successfully initialized");
+            this.initialized = true;
           }
         }
         sendEvent(eventName) {
@@ -27475,7 +27488,7 @@ void main() {
       I3DManager = class {
         constructor() {
           this.stateManager = new StateManager();
-          this.renderer = new Renderer();
+          this.renderer = new Renderer(this.stateManager);
           this.map = new Map2(this.stateManager);
           this.tickLoop = new TickLoop(this.stateManager);
         }
@@ -27540,7 +27553,7 @@ void main() {
           manager.renderer.animate();
           manager.renderer.requestPointerLock();
           manager.renderer.resizeToFitScreen();
-          if (window.view?.gameState?.settings?.mouseLookEnabled === 1) {
+          if (window.view?.gameState?.globalSettings?.mouseLookEnabled === 1) {
             manager.renderer.cameraManager.enableMouseLook();
           }
           initializeKeyEvents();

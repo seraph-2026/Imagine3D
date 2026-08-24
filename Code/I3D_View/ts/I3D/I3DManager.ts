@@ -11,7 +11,7 @@ export class I3DManager {
 
     constructor() {
         this.stateManager = new StateManager();
-        this.renderer = new Renderer();
+        this.renderer = new Renderer(this.stateManager);
         this.map = new Map(this.stateManager);
         this.tickLoop = new TickLoop(this.stateManager);
     }

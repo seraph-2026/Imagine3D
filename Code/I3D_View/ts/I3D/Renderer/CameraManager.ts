@@ -1,9 +1,11 @@
 import * as THREE from "three";
 import { CoordinateMapper } from "../Utilities/CoordinateMapper";
 import { AngleMapper } from "../Utilities/AngleMapper";
+import { StateManager } from "../State/StateManager";
 
 export class CameraManager {
     camera: THREE.Camera;
+    stateManager: StateManager;
     mouseLook: boolean;
     yaw: number;
     pitch: number;
@@ -11,9 +13,10 @@ export class CameraManager {
     mouseUpdateInterval: number;
     lastMouseUpdate: number;
 
-    constructor(camera: THREE.Camera) {
+    constructor(camera: THREE.Camera, stateManger: StateManager) {
         console.log("CameraManager");
         this.camera = camera;
+        this.stateManager = stateManger;
         this.mouseLook = false;
         this.yaw = 0;
         this.pitch = 0;
@@ -25,8 +28,8 @@ export class CameraManager {
 
     setCameraPosition(): void {
         // Only run if we have the position data
-        if (window.view.gameState.pixelLoc) {
-            const playerPixelLoc = window.view.gameState.pixelLoc;
+        if (this.stateManager.gameState?.player?.pixelLoc) {
+            const playerPixelLoc = this.stateManager.gameState.player.pixelLoc;
 
             const byondCoord = CoordinateMapper.byondPixelToCoordinates(
                 playerPixelLoc.x,
@@ -47,14 +50,16 @@ export class CameraManager {
     }
 
     setCameraAngle(): void {
-        if (this.mouseLook) {
-            // If mouse look enabled, use the browser's mouse.
-            this.camera.rotation.y = this.yaw;
-            this.camera.rotation.x = this.pitch;
-        } else {
-            const angle = window.view.gameState.angle.angle; // Degrees
-            // Otherwise, use the rotation angle we're given by BYOND
-            this.camera.rotation.y = AngleMapper.byondAngleToThree(angle);
+        if (this.stateManager.gameState?.player) {
+            if (this.mouseLook) {
+                // If mouse look enabled, use the browser's mouse.
+                this.camera.rotation.y = this.yaw;
+                this.camera.rotation.x = this.pitch;
+            } else {
+                const angle = this.stateManager.gameState?.player?.rotation.angle; // Degrees
+                // Otherwise, use the rotation angle we're given by BYOND
+                this.camera.rotation.y = AngleMapper.byondAngleToThree(angle);
+            }
         }
     }
 
@@ -65,7 +70,7 @@ export class CameraManager {
         const canvas = window.i3d.renderer.threeRenderer.domElement;
 
         document.addEventListener("mousemove", (event) => {
-            if (this.mouseLook && document.pointerLockElement === canvas) {
+            if (this.mouseLook && document.pointerLockElement === canvas && this.stateManager.gameState?.player) {
                 let newYaw = this.yaw + event.movementX * this.mouseSensitivity;
                 let newPitch = this.pitch - event.movementY * this.mouseSensitivity;
 
@@ -83,9 +88,9 @@ export class CameraManager {
                     this.lastMouseUpdate = now;
 
                     // Send yaw to DM (it doesn't have pitch)
-                    const angle = window.view.gameState.angle;
-                    angle.angle = AngleMapper.threeAngleToByond(this.yaw);
-                    //window.view.setGameState("angle", JSON.stringify(angle));
+                    // const angle = this.stateManager.gameState.player.rotation.angle;
+                    // this.stateManager.gameState.player.rotation.angle = AngleMapper.threeAngleToByond(this.yaw);
+                    //this.stateManager.setGameState("angle", JSON.stringify(angle));
                 }
             }
         });

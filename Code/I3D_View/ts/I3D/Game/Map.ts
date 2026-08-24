@@ -29,12 +29,12 @@ export class Map {
         this.stateManager = stateManager;
         console.log("Map");
         console.log("- Succesfully constructured");
-        console.log("- Awaiting to recieve JsonMap from BYOND (using view.gameState)");
+        console.log("- Awaiting to recieve JsonMap from BYOND in game state");
         this.waitForJsonMapThenLoad();
     }
 
     private waitForJsonMapThenLoad(): void {
-        if (!this.stateManager.gameState.map) {
+        if (!this.stateManager.gameState?.map) {
             setTimeout(() => this.waitForJsonMapThenLoad(), 10);
             return;
         }

@@ -10,19 +10,26 @@ I3D_ClientState
     proc
         initializeClientState()
             var/stateToSend = json_encode(JsonLib.serializeDm(src))
-            owner << output(list2params(list("clientState", stateToSend)), "[src.j_browser.j_windowId].[src.j_browser.j_controlId]:i3d.browserView.initializeClientState")
+            owner << output(list2params(list("clientState", stateToSend)), "[src.j_browser.j_windowId].[src.j_browser.j_controlId]:i3d.stateManager.initializeClientState")
     
         pollUntilReady()
-            spawn()
+            spawn(1)
                 while(!src.j_browser.j_isReady)
                     initializeClientState()
                     world << src.toJsonString()
-                    sleep(100)
+                    sleep(50)
+
+client/Topic(href, list/href_list)
+    ..()
+    var/event = href_list["view-event"] // get the association of the element, "value"
+    var/value = href_list["value"] // get the association of the element, "value"
+    switch(event)
+        if("setClientState")
+            setClientState(value)
 
 client
-    verb
-        setClientState(message as text)
-            set hidden = 1
+    proc
+        setClientState(message)
             set instant = 1
 
             var/I3D_ClientState/incomingClientState = JsonLib.deserializeJson(url_decode(message))

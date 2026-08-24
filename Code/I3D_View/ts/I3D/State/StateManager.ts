@@ -1,10 +1,13 @@
 import { manager } from "..";
 import { ClientStateJson } from "./JsonTypes/ClientStateJson";
+import { GameStateJson } from "./JsonTypes/GameState";
 
 export class StateManager {
-    gameState: {
-        [key: string]: any;
-    } = {};
+    gameState: GameStateJson = {
+        player: null,
+        map: null,
+        globalSettings: null,
+    };
 
     clientState: ClientStateJson = {
         browser: {
@@ -25,20 +28,8 @@ export class StateManager {
     }
 
     // Name is not used but is required by DM
-    setGameState(_name: string, value: string): void {
-        console.log("- Setting game state");
-
-        try {
-            this.gameState = JSON.parse(decodeURIComponent(value));
-        } catch (exception) {
-            console.error(exception);
-            return;
-        }
-    }
-
-    // Name is not used but is required by DM
-    initializeClientState(_name: string, value: string): void {
-        if (!this.initialized) {
+    initializeClientState(name: string, value: string): void {
+        if (!this.initialized && name === "clientState") {
             try {
                 console.log("- Initailizing client state");
 
@@ -71,10 +62,30 @@ export class StateManager {
         try {
             const clientStateToSend = encodeURIComponent(JSON.stringify(this.clientState));
             console.log("- Sending client state: ", JSON.stringify(this.clientState));
-            BYOND.command(`setClientState ${clientStateToSend}`);
+
+            // Using topic because client might grow to be fairly large
+            BYOND.topic({
+                viewEvent: "setClientState",
+                value: clientStateToSend,
+            });
         } catch (exception) {
             console.error(exception);
             return;
+        }
+    }
+
+    updateMapState(name: string, value: string): void {
+        if (name === "MapState") {
+            console.log("- Updating game state");
+            try {
+                console.log("- Initailizing game state");
+                this.gameState.map = JSON.parse(decodeURIComponent(value));
+            } catch (exception) {
+                console.error(exception);
+                return;
+            }
+            console.log("- Game state successfully initialized");
+            this.initialized = true;
         }
     }
 
@@ -91,14 +102,3 @@ export class StateManager {
         BYOND.command(`captureEvent ${eventToSend}`);
     }
 }
-// // Don't send updates if nothing changed
-// if (newState != originalState) {
-//     //console.log("- Synchronizing with DM, sending current state back", name);
-
-//     const stateToSend = encodeURIComponent(JSON.stringify(this.state));
-
-//     BYOND.topic({
-//         viewEvent: "reflectState",
-//         value: stateToSend,
-//     });
-// }

@@ -1,17 +1,20 @@
 import * as THREE from "three";
 import { CameraManager } from "./CameraManager";
+import { StateManager } from "../State/StateManager";
 
 export class Renderer {
-    cameraManager: CameraManager;
     scene: THREE.Scene;
     threeRenderer: THREE.WebGLRenderer;
+    stateManager: StateManager;
+    cameraManager: CameraManager;
 
-    constructor() {
+    constructor(stateManager: StateManager) {
         console.log("Renderer");
 
         this.scene = new THREE.Scene();
+        this.stateManager = stateManager;
         const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-        this.cameraManager = new CameraManager(camera);
+        this.cameraManager = new CameraManager(camera, stateManager);
 
         this.threeRenderer = new THREE.WebGLRenderer();
 
@@ -19,7 +22,7 @@ export class Renderer {
         this.threeRenderer.domElement.style.transform = "scaleX(-1)";
         document.body.appendChild(this.threeRenderer.domElement);
 
-        console.log("- Succesfully const2ructured");
+        console.log("- Succesfully constructured");
         console.log("- Awaiting signal to animate()");
     }
 

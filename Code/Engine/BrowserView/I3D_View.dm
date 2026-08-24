@@ -9,7 +9,7 @@ I3D_View
             'Code/I3D_View/build/imagine3d.bundle.js'
         )
         I3D_ClientState/clientState
-        I3D_ClientState/gameState
+        I3D_GameState/gameState
         mob/owner
 
         windowId
@@ -27,6 +27,7 @@ I3D_View
             return
 
         src.clientState = new(windowId, controlId, src.owner)
+        src.gameState = new(src.owner)
         createBrowser()
         loadFiles()
         render()
