@@ -10,41 +10,54 @@ atom/movable
 
 	proc
 		i3d_Move() // Called from tick
-			if(src.i3d_controls.forward && !src.i3d_controls.backward)
-				i3d_moveForward()
-			else if(src.i3d_controls.backward)
-				i3d_moveBackward()
+			var/x = 0
+			var/y = 0
 
-			// TODO: Change to strafe
-			if(src.i3d_controls.leftStrafe && !src.i3d_controls.rightStrafe)
-				i3d_rotateLeft()
-			else if(src.i3d_controls.rightStrafe)
-				i3d_rotateRight()
+			// Forward/backward
+			if(src.i3d_controls.forward)
+				x += sin(angle)
+				y += cos(angle)
 
-		i3d_wrapAngle(angle)
-			angle %= 360
-			if(angle < 0)
-				angle += 360
-			return angle
+			if(src.i3d_controls.backward)
+				x -= sin(angle)
+				y -= cos(angle)
 
-		i3d_moveForward()
-			var/x = sin(angle) * moveSpeed
-			var/y = cos(angle) * moveSpeed
-			step(src, new/vector(x, y))
+			// Strafing
+			if(src.i3d_controls.leftStrafe)
+				x -= cos(angle)
+				y += sin(angle)
 
-		i3d_moveBackward()
-			var/x = sin(angle) * moveSpeed
-			var/y = cos(angle) * moveSpeed
-			step(src, new/vector(-x, -y))
+			if(src.i3d_controls.rightStrafe)
+				x += cos(angle)
+				y -= sin(angle)
 
-		i3d_rotateLeft()
-			angle = i3d_wrapAngle(angle - turnSpeed)
-			i3d_rotateIcon()
+			// Normalize and apply speed
+			var/length = sqrt(x * x + y * y)
 
-		i3d_rotateRight()
-			angle = i3d_wrapAngle(angle + turnSpeed)
-			i3d_rotateIcon()
+			if(length > 0)
+				x /= length
+				y /= length
+
+				x *= moveSpeed
+				y *= moveSpeed
+
+				step(src, new/vector(x, y))
+
+			// if(src.i3d_controls.turnLeft && !src.i3d_controls.turnRight)
+			// 	i3d_rotateLeft()
+
+			// else if(src.i3d_controls.turnRight)
+			// 	i3d_rotateRight()
 
 		i3d_rotateIcon() // Match the icon's angle of rotation to the players angle.
 			if(rotateIcon)
 				src.transform = turn(i3d_originalTransform, i3d_wrapAngle(angle))
+
+		// i3d_rotateLeft()
+		// 	angle = i3d_wrapAngle(angle - turnSpeed)
+		// 	i3d_rotateIcon()
+
+		// i3d_rotateRight()
+		// 	angle = i3d_wrapAngle(angle + turnSpeed)
+		// 	i3d_rotateIcon()
+
