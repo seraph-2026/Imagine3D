@@ -12,6 +12,5 @@ I3D_StateComponent
         var/stateToSend = json_encode(JsonLib.serializeDm(src))
         var/I3D_ClientState/clientState = player.i3d_view.clientState
         var/destination = "[clientState.j_browser.j_windowId].[clientState.j_browser.j_controlId]:i3d.stateManager.update[name]State"
-        world << "sending game state to [destination]"
         player << output(list2params(list("[name]State", stateToSend)), destination)
 

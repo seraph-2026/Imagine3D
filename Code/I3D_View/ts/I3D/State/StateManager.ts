@@ -30,24 +30,20 @@ export class StateManager {
     // Name is not used but is required by DM
     initializeClientState(name: string, value: string): void {
         if (!this.initialized && name === "clientState") {
-            try {
-                console.log("- Initailizing client state");
+            console.log("- Initailizing client state");
 
-                this.clientState = JSON.parse(decodeURIComponent(value));
-                this.clientState.browser.isReady = 1;
-                this.clientState.browser.hasChanged = 1;
+            this.clientState = JSON.parse(decodeURIComponent(value));
+            this.clientState.browser.isReady = 1;
+            this.clientState.browser.hasChanged = 1;
 
-                if (this.clientState.browser.tickLag) {
-                    manager.tickLoop.start(this.clientState.browser.tickLag);
-                } else {
-                    throw Error(
-                        "Was unable to start the network tick process because no tickLag was defined in this.clientState.tickLag.",
-                    );
-                }
-            } catch (exception) {
-                console.error(exception);
-                return;
+            if (this.clientState.browser.tickLag) {
+                manager.tickLoop.start(this.clientState.browser.tickLag);
+            } else {
+                throw Error(
+                    "Was unable to start the network tick process because no tickLag was defined in this.clientState.tickLag.",
+                );
             }
+
             console.log("- Client state successfully initialized");
             this.initialized = true;
         } else {
@@ -58,33 +54,29 @@ export class StateManager {
 
     // Name is not used but is required by DM
     reflectClientState(): void {
-        console.log("- Reflecting client state");
-        try {
-            const clientStateToSend = encodeURIComponent(JSON.stringify(this.clientState));
-            console.log("- Sending client state: ", JSON.stringify(this.clientState));
+        console.log("- Reflecting client state back to DM");
 
-            // Using topic because client might grow to be fairly large
-            BYOND.topic({
-                viewEvent: "setClientState",
-                value: clientStateToSend,
-            });
-        } catch (exception) {
-            console.error(exception);
-            return;
-        }
+        const clientStateToSend = encodeURIComponent(JSON.stringify(this.clientState));
+
+        // Using topic because client might grow to be fairly large
+        BYOND.topic({
+            viewEvent: "setClientState",
+            value: clientStateToSend,
+        });
     }
 
     updateMapState(name: string, value: string): void {
         if (name === "MapState") {
             console.log("- Updating game state");
-            try {
-                console.log("- Initailizing game state");
-                this.gameState.map = JSON.parse(decodeURIComponent(value));
-            } catch (exception) {
-                console.error(exception);
-                return;
-            }
-            console.log("- Game state successfully initialized");
+            this.gameState.map = JSON.parse(decodeURIComponent(value));
+            this.initialized = true;
+        }
+    }
+
+    updatePlayerState(name: string, value: string): void {
+        if (name === "PlayerState") {
+            console.log("- Updating player state");
+            this.gameState.player = JSON.parse(decodeURIComponent(value));
             this.initialized = true;
         }
     }
@@ -96,9 +88,7 @@ export class StateManager {
         };
 
         const eventToSend = JSON.stringify(event);
-
         console.log(eventName, eventToSend);
-
         BYOND.command(`captureEvent ${eventToSend}`);
     }
 }

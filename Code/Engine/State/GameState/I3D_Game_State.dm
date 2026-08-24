@@ -6,16 +6,15 @@ I3D_GameState
         I3D_StateComponent/I3D_GlobalSettings/j_global_settings
 
         mob/owner
-
         hasChanged = FALSE
 
     New(mob/owner)
+        src.owner = owner
         src.j_player = new("Player")
+        src.j_player.hasChanged = 1
+
         src.j_map = global_map
         src.j_global_settings = global_settings
-
-        src.owner = owner
-    
     proc
         sendIfChanged()
             if(j_player.hasChanged)
@@ -30,3 +29,4 @@ I3D_GameState
             if(j_global_settings.hasChanged)
                 src.j_global_settings.hasChanged = FALSE
                 j_global_settings.send(owner)
+    

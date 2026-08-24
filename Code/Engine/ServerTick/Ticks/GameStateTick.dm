@@ -2,7 +2,7 @@
 Imagine3D
     registerTicks()
         ..()
-        src.registerTickProc("gameStateTick", null, src)
+        src.registerPostTickProc("gameStateTick", null, src)
     
     proc
         gameStateTick()

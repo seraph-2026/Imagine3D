@@ -16,12 +16,9 @@ mob
             // Build them a browser
             src.i3d_view = new/I3D_View(windowId, browserControlId, src)
 
-            // Update using the latest global settings
-            i3d_updateGlobalSettings()
-
             // Draw 3D map in the browser
             src.client.drawLatestMap()
-
+            
             /**
                 Start running ticks which are used by the components of this library
                 First one at the time of this comment was movement tick

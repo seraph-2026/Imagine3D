@@ -11,5 +11,5 @@ Imagine3D
         registerTickProc(procName, procArgs, datum/parentDatum)
             tickProcs += new/I3D_TickProc(procName, procArgs, parentDatum)
   
-        registerPostTickProcLast(procName, procArgs, datum/parentDatum)
+        registerPostTickProc(procName, procArgs, datum/parentDatum)
             postTickProcs += new/I3D_TickProc(procName, procArgs, parentDatum)
