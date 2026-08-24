@@ -11,6 +11,6 @@ I3D_StateComponent
     proc/send(mob/player)
         var/stateToSend = json_encode(JsonLib.serializeDm(src))
         var/I3D_ClientState/clientState = player.i3d_view.clientState
-        var/destination = "[clientState.j_browser.j_windowId].[clientState.j_browser.j_controlId]:i3d.stateManager.update[name]State"
-        player << output(list2params(list("[name]State", stateToSend)), destination)
+        var/destination = "[clientState.j_browser.j_windowId].[clientState.j_browser.j_controlId]:i3d.stateManager.update[src.name]State"
 
+        player << output(list2params(list("[name]State", stateToSend)), destination)

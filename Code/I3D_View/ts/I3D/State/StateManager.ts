@@ -81,14 +81,11 @@ export class StateManager {
         }
     }
 
-    sendEvent(eventName: string): void {
-        const event = {
-            browserViewId: this.clientState.browser.windowId,
-            name: eventName,
-        };
-
-        const eventToSend = JSON.stringify(event);
-        console.log(eventName, eventToSend);
-        BYOND.command(`captureEvent ${eventToSend}`);
+    updateGlobalSettingsState(name: string, value: string): void {
+        if (name === "GlobalSettingsState") {
+            console.log("- Updating global settings state");
+            this.gameState.globalSettings = JSON.parse(decodeURIComponent(value));
+            this.initialized = true;
+        }
     }
 }

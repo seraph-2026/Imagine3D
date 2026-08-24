@@ -38,6 +38,7 @@ mob
             var/list/keyImpulses = Imagine3D.getKeyImpulses(src)
 
             for(var/key in keyImpulses)
+                world << "[key]"
 
                 switch(keyMap[key])
                     if(I3D_FORWARD_UP) src.i3d_controls.forward = FALSE

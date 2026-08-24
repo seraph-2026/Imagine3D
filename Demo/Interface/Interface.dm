@@ -11,6 +11,7 @@ mob
         show3dMap()
             winset(src, "window.output", "is-visible=false")
             winset(src, "map-window", "is-visible=false")
+            winset(src, "output-window", "is-visible=false")
             show2DMap = FALSE
 
         show2dMap()
@@ -24,10 +25,10 @@ mob
         showOutput()
             if(!showOutput)
                 showOutput = TRUE
-                winset(src, "window.output", "is-visible=true")
+                winset(src, "output-window", "is-visible=true")
             else
                 showOutput = FALSE
-                winset(src, "window.output", "is-visible=false")
+                winset(src, "output-window", "is-visible=false")
 
         showFullScreen()
             if(showFullScreen)

@@ -20,12 +20,10 @@ Imagine3D
                     var/I3D_PixelLoc/newPixelLoc = new(player.pixloc.x, player.pixloc.y, player.pixloc.z)
 
                     if(newPixelLoc.j_x != player.pixloc.x || newPixelLoc.j_y != player.pixloc.y || newPixelLoc.j_z != player.pixloc.z)
-                        world << "Coordinates changed"
                         playerState.j_pixelLoc = newPixelLoc
                         playerState.hasChanged = 1
                     
                     if(playerState.j_rotation.j_angle != player.angle)
-                        world << "Angle changed"
                         playerState.j_rotation.j_angle = player.angle
                         playerState.hasChanged = 1
 

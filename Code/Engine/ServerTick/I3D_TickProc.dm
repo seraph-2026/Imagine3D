@@ -26,7 +26,6 @@ I3D_TickProc
     proc
         runProc()
             if(src.parentObject)
-
                 call(parentObject, procName)(procArgs)
             else
 

@@ -2,28 +2,15 @@ export function initializeKeyEvents(): void {
     // Non repeatable so we don't spam BYOND's command system
 
     document.addEventListener("keydown", (keyEvent) => {
+        console.log("Key down");
         if (keyEvent.repeat) return;
 
-        const event = {
-            browserViewId: 0,
-            keyCode: keyEvent.code,
-        };
-
-        const eventToSend = JSON.stringify(event);
-
-        BYOND.command(`keyDown ${eventToSend}`);
+        BYOND.command(`keyDown ${keyEvent.code}`);
     });
 
     document.addEventListener("keyup", (keyEvent) => {
         if (keyEvent.repeat) return;
 
-        const event = {
-            browserViewId: 0,
-            keyCode: keyEvent.code,
-        };
-
-        const eventToSend = JSON.stringify(event);
-
-        BYOND.command(`keyUp ${eventToSend}`);
+        BYOND.command(`keyUp ${keyEvent.code}`);
     });
 }

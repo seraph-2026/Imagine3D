@@ -7,7 +7,7 @@ world
 	New()
 		..()
 		Imagine3D.enableMovement()
-//		Imagine3D.enableMouseLook()
+		Imagine3D.enableMouseLook()
 
 mob/Player
 	icon = 'Icons.dmi'
@@ -22,3 +22,4 @@ mob/Player
 		// Run Imagine 3D
 		i3d_init("window","imagine-3d-browser")
 		i3d_enableWebDevTools()
+		

@@ -17,11 +17,8 @@ Imagine3D
                 return list() 
 
         clearKeyImpulses(var/mob/player)
-            
+
             if(player.i3d_view)
                 player.i3d_view.keyImpulses.len = 0
             else
                 return list()
-
-        enableMouseLook()
-            global_settings.j_mouseLookEnabled = TRUE

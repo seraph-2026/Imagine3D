@@ -15,6 +15,7 @@ I3D_GameState
 
         src.j_map = global_map
         src.j_global_settings = global_settings
+
     proc
         sendIfChanged()
             if(j_player.hasChanged)
@@ -22,7 +23,6 @@ I3D_GameState
                 j_player.send(owner)
 
             if(j_map.hasChanged)
-                world << "Map changed"
                 src.j_map.hasChanged = FALSE
                 j_map.send(owner)
             

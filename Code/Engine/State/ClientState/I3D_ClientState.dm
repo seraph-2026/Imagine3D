@@ -10,7 +10,7 @@ I3D_ClientState
     proc
         initializeClientState()
             var/stateToSend = json_encode(JsonLib.serializeDm(src))
-            owner << output(list2params(list("clientState", stateToSend)), "[src.j_browser.j_windowId].[src.j_browser.j_controlId]:i3d.stateManager.initializeClientState")
+            src.owner << output(list2params(list("clientState", stateToSend)), "[src.j_browser.j_windowId].[src.j_browser.j_controlId]:i3d.stateManager.initializeClientState")
     
         pollUntilReady()
             spawn(1)
@@ -19,13 +19,12 @@ I3D_ClientState
                     initializeClientState()
                 
                 // Give the user global settings in their game state
-                global_settings.send(owner)
+                global_settings.send(src.owner)
 
                 // Intialize the player's coordinates
                 var/I3D_PixelLoc/newPixelLoc = new(src.owner.pixloc.x, src.owner.pixloc.y, src.owner.pixloc.z)
                 src.owner.i3d_view.gameState.j_player.j_pixelLoc = newPixelLoc
                 src.owner.i3d_view.gameState.j_player.hasChanged = 1
-
 
 
 client/Topic(href, list/href_list)

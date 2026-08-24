@@ -59,5 +59,3 @@ I3D_View
             var/rawHtml = file2text(htmlFile)
             owner << output(rawHtml, "[windowId].[controlId]")
 
-        setState()
-            //world << "setState is stubbed"

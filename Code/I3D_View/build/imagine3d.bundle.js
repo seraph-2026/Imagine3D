@@ -27414,14 +27414,12 @@ void main() {
             this.initialized = true;
           }
         }
-        sendEvent(eventName) {
-          const event = {
-            browserViewId: this.clientState.browser.windowId,
-            name: eventName
-          };
-          const eventToSend = JSON.stringify(event);
-          console.log(eventName, eventToSend);
-          BYOND.command(`captureEvent ${eventToSend}`);
+        updateGlobalSettingsState(name, value) {
+          if (name === "GlobalSettingsState") {
+            console.log("- Updating global settings state");
+            this.gameState.globalSettings = JSON.parse(decodeURIComponent(value));
+            this.initialized = true;
+          }
         }
       };
     }
@@ -27504,22 +27502,13 @@ void main() {
   // ts/I3D/Controls/Keys.ts
   function initializeKeyEvents() {
     document.addEventListener("keydown", (keyEvent) => {
+      console.log("Key down");
       if (keyEvent.repeat) return;
-      const event = {
-        browserViewId: 0,
-        keyCode: keyEvent.code
-      };
-      const eventToSend = JSON.stringify(event);
-      BYOND.command(`keyDown ${eventToSend}`);
+      BYOND.command(`keyDown ${keyEvent.code}`);
     });
     document.addEventListener("keyup", (keyEvent) => {
       if (keyEvent.repeat) return;
-      const event = {
-        browserViewId: 0,
-        keyCode: keyEvent.code
-      };
-      const eventToSend = JSON.stringify(event);
-      BYOND.command(`keyUp ${eventToSend}`);
+      BYOND.command(`keyUp ${keyEvent.code}`);
     });
   }
   var init_Keys = __esm({

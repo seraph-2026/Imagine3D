@@ -17,11 +17,16 @@ window "map-window"
 		size = 640x480
 		anchor1 = -1,-1
 		anchor2 = -1,-1
+		background-color = none
 		is-visible = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "2D Minimap"
 		statusbar = false
 		can-minimize = false
+		outer-size = 656x519
+		outer-pos = 291,0
+		inner-pos = 8,31
+		screen-size = 1920x1032
 	elem "map"
 		type = MAP
 		pos = 0,0
@@ -29,6 +34,29 @@ window "map-window"
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = "zoom;letterbox;zoom-mode"
+
+window "output-window"
+	elem "output-window"
+		type = MAIN
+		pos = 291,0
+		size = 640x480
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		background-color = none
+		is-visible = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		outer-size = 656x538
+		outer-pos = 291,0
+		inner-pos = 8,31
+		screen-size = 1920x1032
+	elem "output"
+		type = OUTPUT
+		pos = 0,0
+		size = 640x496
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		is-default = true
+		saved-params = "max-lines"
 
 window "window"
 	elem "window"
@@ -57,12 +85,4 @@ window "window"
 		background-color = none
 		saved-params = ""
 		inner-background-color = none
-	elem "output"
-		type = OUTPUT
-		pos = 464,0
-		size = 496x655
-		anchor1 = 48,0
-		anchor2 = 100,100
-		is-default = true
-		saved-params = "max-lines"
 

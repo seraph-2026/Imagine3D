@@ -9,6 +9,10 @@ Imagine3D
             icon_size_z = number
         
         registerTicks() // Overriden by tick definitions
+        
+        enableMouseLook()
+            global_settings.j_mouseLookEnabled = 1
+            global_settings.hasChanged = 1
 
 mob
     proc
