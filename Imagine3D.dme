@@ -19,6 +19,7 @@
 #include "Code\Engine\Controls\I3D_Controls.dm"
 #include "Code\Engine\Controls\Imagine3D.dm"
 #include "Code\Engine\Controls\KeyEvents.dm"
+#include "Code\Engine\Controls\Mob.dm"
 #include "Code\Engine\Map\Client.dm"
 #include "Code\Engine\Map\I3D_Map.dm"
 #include "Code\Engine\Map\I3D_Tile.dm"

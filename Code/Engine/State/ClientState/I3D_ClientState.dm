@@ -15,7 +15,7 @@ I3D_ClientState
         pollUntilReady()
             spawn(1)
                 while(!src.j_browser.j_isReady)
-                    sleep(20)
+                    sleep(1)
                     initializeClientState()
                 
                 // Give the user global settings in their game state

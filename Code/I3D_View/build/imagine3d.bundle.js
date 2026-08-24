@@ -27089,7 +27089,7 @@ void main() {
           return MathUtils.degToRad(byondAngle % 360 - Math.PI / 2);
         }
         static threeAngleToByond(threeAngle) {
-          return MathUtils.radToDeg(threeAngle) + 90;
+          return MathUtils.radToDeg(threeAngle);
         }
       };
     }
@@ -27160,6 +27160,8 @@ void main() {
               const now = performance.now();
               if (now - this.lastMouseUpdate >= this.mouseUpdateInterval) {
                 this.lastMouseUpdate = now;
+                this.stateManager.clientState.browser.mouseAngle = AngleMapper.threeAngleToByond(this.yaw);
+                this.stateManager.clientState.browser.hasChanged = 1;
               }
             }
           });
@@ -27363,13 +27365,17 @@ void main() {
               controlId: null,
               isReady: null,
               tickLag: null,
-              hasChanged: 0
+              hasChanged: 0,
+              mouseAngle: null
             }
           };
           this.initialized = false;
           console.log("BrowserView");
           console.log("- Successfully created");
           console.log("- Listening for state changes");
+        }
+        setCameraManager(cameraManager) {
+          this.cameraManager = cameraManager;
         }
         // Name is not used but is required by DM
         initializeClientState(name, value) {
@@ -27419,6 +27425,9 @@ void main() {
             console.log("- Updating global settings state");
             this.gameState.globalSettings = JSON.parse(decodeURIComponent(value));
             this.initialized = true;
+            if (this.gameState.globalSettings?.mouseLookEnabled && this.cameraManager) {
+              this.cameraManager.enableMouseLook();
+            }
           }
         }
       };
@@ -27478,6 +27487,7 @@ void main() {
           this.renderer = new Renderer(this.stateManager);
           this.map = new Map2(this.stateManager);
           this.tickLoop = new TickLoop(this.stateManager);
+          this.stateManager.setCameraManager(this.renderer.cameraManager);
         }
       };
       manager = new I3DManager();

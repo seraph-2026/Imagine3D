@@ -88,9 +88,8 @@ export class CameraManager {
                     this.lastMouseUpdate = now;
 
                     // Send yaw to DM (it doesn't have pitch)
-                    // const angle = this.stateManager.gameState.player.rotation.angle;
-                    // this.stateManager.gameState.player.rotation.angle = AngleMapper.threeAngleToByond(this.yaw);
-                    //this.stateManager.setGameState("angle", JSON.stringify(angle));
+                    this.stateManager.clientState.browser.mouseAngle = AngleMapper.threeAngleToByond(this.yaw);
+                    this.stateManager.clientState.browser.hasChanged = 1;
                 }
             }
         });

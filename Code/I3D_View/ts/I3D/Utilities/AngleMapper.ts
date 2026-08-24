@@ -9,6 +9,6 @@ export class AngleMapper {
     }
 
     static threeAngleToByond(threeAngle: number): number {
-        return THREE.MathUtils.radToDeg(threeAngle) + 90;
+        return THREE.MathUtils.radToDeg(threeAngle);
     }
 }

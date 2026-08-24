@@ -4,4 +4,5 @@ export type BrowserJson = {
     isReady: number | null;
     tickLag: number | null;
     hasChanged: number | null;
+    mouseAngle: number | null;
 };

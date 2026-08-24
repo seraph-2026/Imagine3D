@@ -14,6 +14,8 @@ export class I3DManager {
         this.renderer = new Renderer(this.stateManager);
         this.map = new Map(this.stateManager);
         this.tickLoop = new TickLoop(this.stateManager);
+
+        this.stateManager.setCameraManager(this.renderer.cameraManager);
     }
 }
 

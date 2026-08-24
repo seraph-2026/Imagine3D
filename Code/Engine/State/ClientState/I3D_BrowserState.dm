@@ -3,6 +3,7 @@ I3D_StateComponent/I3D_BrowserState
         j_windowId
         j_controlId
         j_tickLag
+        j_mouseAngle
         j_hasChanged
         j_isReady = FALSE
     

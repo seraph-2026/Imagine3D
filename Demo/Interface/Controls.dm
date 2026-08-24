@@ -38,18 +38,18 @@ mob
             var/list/keyImpulses = Imagine3D.getKeyImpulses(src)
 
             for(var/key in keyImpulses)
-                world << "[key]"
 
                 switch(keyMap[key])
-                    if(I3D_FORWARD_UP) src.i3d_controls.forward = FALSE
-                    if(I3D_BACKWARD_UP) src.i3d_controls.backward = FALSE
-                    if(I3D_STRAFE_LEFT_UP) src.i3d_controls.leftStrafe = FALSE
-                    if(I3D_STRAFE_RIGHT_UP) src.i3d_controls.rightStrafe = FALSE
-
                     if(I3D_FORWARD_DOWN) src.i3d_controls.forward = TRUE
                     if(I3D_BACKWARD_DOWN) src.i3d_controls.backward = TRUE
                     if(I3D_STRAFE_LEFT_DOWN) src.i3d_controls.leftStrafe = TRUE
                     if(I3D_STRAFE_RIGHT_DOWN) src.i3d_controls.rightStrafe = TRUE
+
+
+                    if(I3D_FORWARD_UP) src.i3d_controls.forward = FALSE
+                    if(I3D_BACKWARD_UP) src.i3d_controls.backward = FALSE
+                    if(I3D_STRAFE_LEFT_UP) src.i3d_controls.leftStrafe = FALSE
+                    if(I3D_STRAFE_RIGHT_UP) src.i3d_controls.rightStrafe = FALSE
 
                     if(F1_MENU) show3dMap()
                     if(F2_MENU) show2dMap()

@@ -1,8 +1,9 @@
-import { manager } from "..";
+import { CameraManager, manager } from "..";
 import { ClientStateJson } from "./JsonTypes/ClientStateJson";
 import { GameStateJson } from "./JsonTypes/GameState";
 
 export class StateManager {
+    cameraManager?: CameraManager | null;
     gameState: GameStateJson = {
         player: null,
         map: null,
@@ -16,6 +17,7 @@ export class StateManager {
             isReady: null,
             tickLag: null,
             hasChanged: 0,
+            mouseAngle: null,
         },
     };
 
@@ -25,6 +27,10 @@ export class StateManager {
         console.log("BrowserView");
         console.log("- Successfully created");
         console.log("- Listening for state changes");
+    }
+
+    setCameraManager(cameraManager: CameraManager): void {
+        this.cameraManager = cameraManager;
     }
 
     // Name is not used but is required by DM
@@ -86,6 +92,10 @@ export class StateManager {
             console.log("- Updating global settings state");
             this.gameState.globalSettings = JSON.parse(decodeURIComponent(value));
             this.initialized = true;
+
+            if (this.gameState.globalSettings?.mouseLookEnabled && this.cameraManager) {
+                this.cameraManager.enableMouseLook();
+            }
         }
     }
 }
