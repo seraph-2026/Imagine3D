@@ -16,11 +16,17 @@ export class Renderer {
         const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.cameraManager = new CameraManager(camera, stateManager);
 
-        this.threeRenderer = new THREE.WebGLRenderer();
+        this.threeRenderer = new THREE.WebGLRenderer({
+            antialias: true,
+        });
 
         this.threeRenderer.setSize(window.innerWidth, window.innerHeight);
         this.threeRenderer.domElement.style.transform = "scaleX(-1)";
+
         document.body.appendChild(this.threeRenderer.domElement);
+
+        // Skybox
+        this.scene.background = new THREE.Color(0x87ceeb);
 
         console.log("- Succesfully constructured");
         console.log("- Awaiting signal to animate()");

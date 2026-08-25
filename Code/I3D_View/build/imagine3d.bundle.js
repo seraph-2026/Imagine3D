@@ -27184,10 +27184,13 @@ void main() {
           this.stateManager = stateManager;
           const camera = new PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1e3);
           this.cameraManager = new CameraManager(camera, stateManager);
-          this.threeRenderer = new WebGLRenderer();
+          this.threeRenderer = new WebGLRenderer({
+            antialias: true
+          });
           this.threeRenderer.setSize(window.innerWidth, window.innerHeight);
           this.threeRenderer.domElement.style.transform = "scaleX(-1)";
           document.body.appendChild(this.threeRenderer.domElement);
+          this.scene.background = new Color(8900331);
           console.log("- Succesfully constructured");
           console.log("- Awaiting signal to animate()");
         }
