@@ -18,6 +18,11 @@ var/keyMap = alist(
     "KeyS+UP"= I3D_BACKWARD_UP,
     "KeyD+UP"= I3D_STRAFE_RIGHT_UP,
 
+    "KeyQ"= I3D_TURN_LEFT_DOWN,
+    "KeyQ+UP"= I3D_TURN_LEFT_UP,
+    "KeyE"= I3D_TURN_RIGHT_DOWN,
+    "KeyE+UP"= I3D_TURN_RIGHT_UP,
+
     "F1"=F1_MENU,
     "F2"=F2_MENU,
     "F3"=F3_MENU,
@@ -45,11 +50,16 @@ mob
                     if(I3D_STRAFE_LEFT_DOWN) src.i3d_controls.leftStrafe = TRUE
                     if(I3D_STRAFE_RIGHT_DOWN) src.i3d_controls.rightStrafe = TRUE
 
+                    if(I3D_TURN_LEFT_DOWN) src.i3d_controls.turnLeft = TRUE
+                    if(I3D_TURN_RIGHT_DOWN) src.i3d_controls.turnRight = TRUE
 
                     if(I3D_FORWARD_UP) src.i3d_controls.forward = FALSE
                     if(I3D_BACKWARD_UP) src.i3d_controls.backward = FALSE
                     if(I3D_STRAFE_LEFT_UP) src.i3d_controls.leftStrafe = FALSE
                     if(I3D_STRAFE_RIGHT_UP) src.i3d_controls.rightStrafe = FALSE
+
+                    if(I3D_TURN_LEFT_UP) src.i3d_controls.turnLeft = FALSE
+                    if(I3D_TURN_RIGHT_UP) src.i3d_controls.turnRight = FALSE
 
                     if(F1_MENU) show3dMap()
                     if(F2_MENU) show2dMap()

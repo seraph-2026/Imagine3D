@@ -22,14 +22,23 @@ atom/movable
 				x -= sin(angle)
 				y -= cos(angle)
 
-			// Strafing
-			if(src.i3d_controls.leftStrafe)
-				x -= cos(angle)
-				y += sin(angle)
+			// Turning takes priority over strafing.
+			// If we're turning, don't strafe.
+			if(src.i3d_controls.turnLeft && !src.i3d_controls.turnRight)
+				i3d_rotateLeft()
 
-			if(src.i3d_controls.rightStrafe)
-				x += cos(angle)
-				y -= sin(angle)
+			else if(src.i3d_controls.turnRight && !src.i3d_controls.turnLeft)
+				i3d_rotateRight()
+
+			// Otherwise, allow strafing.
+			else
+				if(src.i3d_controls.leftStrafe)
+					x -= cos(angle)
+					y += sin(angle)
+
+				if(src.i3d_controls.rightStrafe)
+					x += cos(angle)
+					y -= sin(angle)
 
 			// Normalize and apply speed
 			var/length = sqrt(x * x + y * y)
@@ -43,21 +52,14 @@ atom/movable
 
 				step(src, new/vector(x, y))
 
-			// if(src.i3d_controls.turnLeft && !src.i3d_controls.turnRight)
-			// 	i3d_rotateLeft()
+		i3d_rotateLeft()
+			angle = i3d_wrapAngle(angle - turnSpeed)
+			i3d_rotateIcon()
 
-			// else if(src.i3d_controls.turnRight)
-			// 	i3d_rotateRight()
+		i3d_rotateRight()
+			angle = i3d_wrapAngle(angle + turnSpeed)
+			i3d_rotateIcon()
 
 		i3d_rotateIcon() // Match the icon's angle of rotation to the players angle.
 			if(rotateIcon)
 				src.transform = turn(i3d_originalTransform, i3d_wrapAngle(angle))
-
-		// i3d_rotateLeft()
-		// 	angle = i3d_wrapAngle(angle - turnSpeed)
-		// 	i3d_rotateIcon()
-
-		// i3d_rotateRight()
-		// 	angle = i3d_wrapAngle(angle + turnSpeed)
-		// 	i3d_rotateIcon()
-

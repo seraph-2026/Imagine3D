@@ -19,6 +19,8 @@ I3D_Controls
         backward = FALSE
         leftStrafe = FALSE
         rightStrafe = FALSE
+        turnLeft = FALSE
+        turnRight = FALSE
 
 atom/movable
     var/I3D_Controls/i3d_controls = new() // Give every mob a set of controls
